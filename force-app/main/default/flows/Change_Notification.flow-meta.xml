@@ -71,7 +71,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <textTemplates>
         <name>Email_Text</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
