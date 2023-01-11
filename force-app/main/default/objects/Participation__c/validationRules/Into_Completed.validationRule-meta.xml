@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Into_Completed</fullName>
+    <active>true</active>
+    <errorConditionFormula>Into_Completed__c</errorConditionFormula>
+    <errorDisplayField>Into_Completed__c</errorDisplayField>
+    <errorMessage>Cannot enroll students into completed class</errorMessage>
+</ValidationRule>

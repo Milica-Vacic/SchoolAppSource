@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Minimum_Length</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISNEW() &amp;&amp; Due_Date__c &lt;  (TODAY()+5)) || 
+ISCHANGED( Due_Date__c )</errorConditionFormula>
+    <errorDisplayField>Due_Date__c</errorDisplayField>
+    <errorMessage>The due date must be at least five days from today.</errorMessage>
+</ValidationRule>

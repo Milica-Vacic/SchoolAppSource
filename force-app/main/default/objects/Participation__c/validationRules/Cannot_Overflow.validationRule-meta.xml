@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Overflow</fullName>
+    <active>true</active>
+    <errorConditionFormula>Is_Overflow__c</errorConditionFormula>
+    <errorDisplayField>Is_Overflow__c</errorDisplayField>
+    <errorMessage>Attendee count may not exceed quota.</errorMessage>
+</ValidationRule>

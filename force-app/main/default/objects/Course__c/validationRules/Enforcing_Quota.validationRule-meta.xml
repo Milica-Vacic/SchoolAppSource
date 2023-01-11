@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enforcing_Quota</fullName>
+    <active>true</active>
+    <errorConditionFormula>Attendees_Count__c &gt; Attendees_Quota__c</errorConditionFormula>
+    <errorMessage>Number of enrolled students cannot exceed quota.</errorMessage>
+</ValidationRule>

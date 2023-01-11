@@ -1,0 +1,12 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body style="height: auto; min-height: auto;">Template<br />
+{{{Course__c.Name}}}<br />
+<br />
+<br />
+_____________________________________________________________________<br />
+Powered by Salesforce<br />
+http://www.salesforce.com/</body>
+</html>

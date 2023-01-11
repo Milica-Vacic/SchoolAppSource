@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Solution_Compact</fullName>
+    <fields>Name</fields>
+    <fields>Assignment__c</fields>
+    <fields>Student__c</fields>
+    <fields>Score__c</fields>
+    <label>Solution_Compact</label>
+</CompactLayout>

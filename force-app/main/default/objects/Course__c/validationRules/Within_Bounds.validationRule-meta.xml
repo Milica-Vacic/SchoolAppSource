@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Within_Bounds</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISNEW()  &amp;&amp;  Start_Date__c &lt; TODAY() || Start_Date__c&gt;= End_Date__c) ||  ISCHANGED( Start_Date__c )</errorConditionFormula>
+    <errorDisplayField>Start_Date__c</errorDisplayField>
+    <errorMessage>Start date cannot be in the past and must be before the end date.</errorMessage>
+</ValidationRule>

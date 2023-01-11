@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Student__c</fullName>
+    <externalId>false</externalId>
+    <label>Student</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>You can only enroll students, not tutors.</errorMessage>
+        <filterItems>
+            <field>Person__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Student</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Person__c</referenceTo>
+    <relationshipLabel>Students</relationshipLabel>
+    <relationshipName>Participations</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>
