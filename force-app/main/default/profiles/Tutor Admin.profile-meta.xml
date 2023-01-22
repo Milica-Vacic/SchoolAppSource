@@ -112,6 +112,71 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.CountryPrefix__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.ErrorCause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.ErrorId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.ErrorResolution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.Error__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.IsValid__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.NationalFormat__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.NetworkCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.NetworkCountry__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.NetworkName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.NumberType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.PhoneNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Phone_Validation_Result__c.RequestProcessed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Solution__c.Assig_Student__c</field>
         <readable>false</readable>
@@ -147,6 +212,12 @@
     <layoutAssignments>
         <layout>Person__c-Person Layout</layout>
         <recordType>Person__c.Tutor</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Phone_Validation_Result__c-Phone Validation Result Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ValidationAPIKey__mdt-ValidationAPIKey Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
