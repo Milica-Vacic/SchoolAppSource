@@ -1,6 +1,6 @@
 @isTest
 private class PersonInsertionTest {
-    @isTest static void ValidationRecordCreationTest() {
+    @isTest static void validationRecordCreationTest() {
         Person__c p=new Person__c();
         p.First_Name__c='fn2';
         p.Last_Name__c='ln2';
@@ -11,7 +11,7 @@ private class PersonInsertionTest {
         //Database.SaveResult result = Database.insert(p, false);
         insert p;
         Test.stopTest();
-        System.assert([select ValidatedFieldValue__c from Phone_Validation_Result__c where Person__c=:p.Id].size() > 0);
+        System.assert([select ValidatedFieldValue__c from Phone_Validation_Result__c where Person__c=:p.Id].size() > 0,'Phone Validation Result was not created');
 
 
     }
