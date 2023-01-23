@@ -1,5 +1,4 @@
 public with sharing class PhoneValidCallout {
-    public PhoneValidCallout() {
         @future(callout=true)
         public static void makeCallout(ID personId, String newPhone, String fieldName) {
             HttpRequest request = new HttpRequest();
@@ -33,6 +32,4 @@ public with sharing class PhoneValidCallout {
 
 
         }
-
-    }
 }
