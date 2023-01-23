@@ -1,6 +1,6 @@
 public with sharing class PhoneValidCallout {
         @future(callout=true)
-        public static HttpResponse makeCallout(ID personId, String newPhone, String fieldName) {
+        public static void makeCallout(ID personId, String newPhone, String fieldName) {
             HttpRequest request = new HttpRequest();
             ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');//zauzima heap space???
             String endpoint = mdt?.URL__c+'?Key='+mdt?.KeyValue__c+'&Phone='+newPhone;
@@ -31,7 +31,6 @@ public with sharing class PhoneValidCallout {
                 validRes.ErrorResolution__c=(String)m.get('Resolution');
             }
             insert validRes;
-            return res;
 
         }
 }
