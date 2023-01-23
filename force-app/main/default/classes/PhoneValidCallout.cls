@@ -1,17 +1,18 @@
 public with sharing class PhoneValidCallout {
         @future(callout=true)
-        public static void makeCallout(ID personId, String newPhone, String fieldName) {
+        public static HttpResponse makeCallout(ID personId, String newPhone, String fieldName) {
             HttpRequest request = new HttpRequest();
-            ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
+            ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');//zauzima heap space???
             String endpoint = mdt?.URL__c+'?Key='+mdt?.KeyValue__c+'&Phone='+newPhone;
+            System.debug(endpoint);
             request.setEndPoint(endpoint);
             request.setMethod('GET');
             HttpResponse res = new HTTP().send(request);
+            Map<string,object> m = (Map<string,object>)JSON.deserializeUntyped(res.getbody());
             Phone_Validation_Result__c validRes=new Phone_Validation_Result__c();
             validRes.ValidatedFieldValue__c=newPhone;
             validRes.ValidatedFieldName__c=fieldName; //Is this dumb????????
             validRes.Person__c=personId;
-            Map<string,object> m = (Map<string,object>)JSON.deserializeUntyped(res.getbody());
             if (res.getStatusCode()==200){
                 validRes.PhoneNumber__c=(String)m.get('PhoneNumber');
                 validRes.RequestProcessed__c=(Boolean)m.get('RequestProcessed');
@@ -30,7 +31,7 @@ public with sharing class PhoneValidCallout {
                 validRes.ErrorResolution__c=(String)m.get('Resolution');
             }
             insert validRes;
-
+            return res;
 
         }
 }
