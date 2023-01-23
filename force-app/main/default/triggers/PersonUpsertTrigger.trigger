@@ -1,4 +1,4 @@
-trigger PersonUpsertTrigger on SOBJECT (before insert, before update) {
+trigger PersonUpsertTrigger on Person__c (before insert, before update) {
 private static Boolean alreadyValidated=false;
 
 if (alreadyValidated || Trigger.new[0].Phone__c.isBlank() || Trigger.new[0].Phone__c==Trigger.old?.get(0).Phone__c){
