@@ -7,11 +7,11 @@ public with sharing class PhoneValidCallout {
             request.setMethod('GET');
             HttpResponse res = new HTTP().send(request);
             Phone_Validation_Result__c validRes=new Phone_Validation_Result__c();
-            validRes.ValidatedFieldValue=newPhone;
-            validRes.ValidatedFieldName=fieldName; //Is this dumb????????
+            validRes.ValidatedFieldValue__c=newPhone;
+            validRes.ValidatedFieldName__c=fieldName; //Is this dumb????????
             validRes.Person__c=personId;
+            Map<string,object> m = (Map<string,object>)JSON.deserializeUntyped(res.getbody());
             if (res.getStatusCode()==200){
-                Map<string,object> m = (Map<string,object>)JSON.deserializeUntyped(res.getbody());
                 validRes.PhoneNumber__c=(String)m.get('PhoneNumber');
                 validRes.RequestProcessed__c=(Boolean)m.get('RequestProcessed');
                 validRes.IsValid__c=(String)m.get('IsValid');

@@ -5,5 +5,5 @@ if (alreadyValidated || Trigger.new[0].Phone__c.isBlank() || Trigger.new[0].Phon
     return;
 }
 alreadyValidated=true;
-PhoneValidCallout.makeCallout(Trigger.new[0].Id,Trigger.new[0].Phone__c,'Phone__c');
+PhoneValidCallout.makeCallout(Trigger.new[0].Id,Trigger.new[0].Phone__c.toString(),'Phone__c');
 }
