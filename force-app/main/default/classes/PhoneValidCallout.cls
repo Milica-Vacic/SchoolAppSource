@@ -2,8 +2,8 @@ public with sharing class PhoneValidCallout {
         @future(callout=true)
         public static void makeCallout(ID personId, String newPhone, String fieldName) {
             HttpRequest request = new HttpRequest();
-            ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('default');
-            String endpoint = mdt.URL__c+'?Key='+mdt.KeyValue__c+'&Phone='+newPhone;
+            ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
+            String endpoint = mdt?.URL__c+'?Key='+mdt?.KeyValue__c+'&Phone='+newPhone;
             request.setEndPoint(endpoint);
             request.setMethod('GET');
             HttpResponse res = new HTTP().send(request);
