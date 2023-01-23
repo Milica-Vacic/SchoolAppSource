@@ -5,6 +5,14 @@
         <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
+    <classAccesses>
+        <apexClass>PersonInsertionTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PhoneValidCallout</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>true</editable>
@@ -217,7 +225,7 @@
         <layout>Phone_Validation_Result__c-Phone Validation Result Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ValidationAPIKey__mdt-ValidationAPIKey Layout</layout>
+        <layout>ValidationAPISettings__mdt-ValidationAPIKey Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
