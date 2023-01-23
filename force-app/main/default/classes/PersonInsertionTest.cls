@@ -8,7 +8,7 @@ private class PersonInsertionTest {
         p.Phone__c='+381604009911';
 
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
-        mock.setStaticResource('PhoneValidationSuccess.json');
+        mock.setStaticResource('PhoneValidationSuccess');
         mock.setStatusCode(200);
         mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
         Test.setMock(HttpCalloutMock.class, mock);
