@@ -221,7 +221,7 @@
         <layout>Phone_Validation_Result__c-Phone Validation Result Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ValidationAPIKey__mdt-ValidationAPIKey Layout</layout>
+        <layout>ValidationAPISettings__mdt-ValidationAPIKey Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
