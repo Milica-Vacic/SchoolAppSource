@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">https://api.addressy.com/PhoneNumberValidation/Interactive/Validate/v2.2/</value>
+        <value xsi:type="xsd:string">https://api.addressy.com/PhoneNumberValidation/Interactive/Validate/v2.2/json3.ws</value>
     </values>
 </CustomMetadata>
