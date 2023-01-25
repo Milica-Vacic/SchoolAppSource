@@ -30,10 +30,9 @@ public with sharing class PhoneValidationAPI {
             insert mapToSObject(res);
         }
         else{
-            /* Phone_Validation_Result__c validRes=new Phone_Validation_Result__c();
-            validRes.APIFaliure__c=res.getBody();
-            insert validRes; */
-            //add a textarea on sobject to store the whole body of the response if it happens
+            Phone_Validation_Result__c validRes=new Phone_Validation_Result__c();
+            validRes.API_Error__c=res.getBody();
+            insert validRes;
         }
 
     }
