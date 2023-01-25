@@ -8,7 +8,7 @@ private class PhoneValidationTest {
         insert p;
         Test.stopTest();
 
-        List<Phone_Validation_Result__c> valResults = [select FIELDS(ALL) from Phone_Validation_Result__c where Person__c=:p.Id];
+        List<Phone_Validation_Result__c> valResults = [select PhoneNumber__c, Person__c,API_Error__c,CountryPrefix__c,ErrorId__c from Phone_Validation_Result__c where Person__c=:p.Id];
         //kad budemo imali i mobile phone??? nije prob, ovde svakako ubacujemo samo phone
         System.assert(valResults.size()==1, 'Exactly one phone validation result should have been created for new user, not '+valResults.size());
         Phone_Validation_Result__c res = valResults[0];
