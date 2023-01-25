@@ -9,7 +9,7 @@ public with sharing class PhoneValidationAPI {
         return instance;
     }
 
-    private Phone_Validation_Result__c mapToSObject(HttpResponse res){
+    private static Phone_Validation_Result__c mapToSObject(HttpResponse res){
         PhoneValidationResultDTO dto = PhoneValidationResultDTO.parse(res.getbody());
         Phone_Validation_Result__c validRes=new Phone_Validation_Result__c();
         ///stuff here, add if error to do less actions? or just map all of it???????????????????????????
