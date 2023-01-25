@@ -1,13 +1,16 @@
 @isTest
 public with sharing class PhoneValidationAPIMock implements HttpCalloutMock{
 
+    //make a variable for the succes body and fail body here, teest vissible, use it to validate stuff
+
     public HTTPResponse respond(HTTPRequest req){
         System.assertEquals('https://api.addressy.com/PhoneNumberValidation/Interactive/Validate/v2.20/json3.ws', req.getEndpoint(), 'Incorrect request endpoint');
         System.assertEquals('GET', req.getMethod(), 'Incorrect request method, should be GET');
         HTTPResponse res = new HTTPResponse();
         res.setStatusCode(200);
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json;charset=UTF-8');
         PageReference ref = new PageReference(req.getEndpoint());
+
         if (!((String)ref.getParameters().get('Phone')).isNumeric()){
             res.setBody('{"Items":[{"Id":1002,"Error":"Invalid phone number format","Cause":"The phone number provided is not in a valid international format.","Resolution":"Please ensure that you supply a phone number and try again."}]}');
         }
