@@ -17,7 +17,7 @@ public with sharing class PhoneValidationResultDTO {
         public String Resolution;
     }
     
-    public PhoneValidationResultDTO parse(String json) {
+    public static PhoneValidationResultDTO parse(String json) {
         return (PhoneValidationResultDTO) System.JSON.deserialize(json, PhoneValidationResultDTO.class);
     }
 }
