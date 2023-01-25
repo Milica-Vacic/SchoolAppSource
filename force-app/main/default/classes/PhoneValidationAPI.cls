@@ -20,7 +20,7 @@ public with sharing class PhoneValidationAPI {
                     validRes.put(field.getDescribe().getName(), item.get(field.getDescribe().getLabel()));
                 }
             }
-        validRes.ErrorId__c=item.Id;
+        validRes.ErrorId__c=(Decimal)item.get('Id');
         return validRes;
     }
 
