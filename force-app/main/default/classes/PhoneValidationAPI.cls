@@ -17,7 +17,7 @@ public with sharing class PhoneValidationAPI {
     }
 
     @future(callout=true)
-    public void validate(ID personId, String newPhone, String fieldName) {
+    public static void validate(ID personId, String newPhone, String fieldName) {
         HttpRequest request = new HttpRequest();
         ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
         String endpoint = '{0}?Key={1}&Phone={2}';
