@@ -22,8 +22,9 @@ public with sharing class APIMock implements HttpCalloutMock{
             }
             else{
                 String body='{"Items":[{"PhoneNumber":"{0}","RequestProcessed":true,"IsValid":"Yes","NetworkCode":"+381","NetworkName":"A1",'
-                    +'"NetworkCountry":"SRB","NationalFormat":"0604009911","CountryPrefix":381,"NumberType":"MOBILE"}] }';
+                    +'"NetworkCountry":"{1}","NationalFormat":"0604009911","CountryPrefix":381,"NumberType":"MOBILE"}] }';
                 body=body.replace('{0}', (String)ref.getParameters().get('Phone'));
+                body=body.replace('{1}', (String)ref.getParameters().get('Country'));
                 res.setBody(body);
             }	
         }
