@@ -119,8 +119,6 @@ private class PhoneValidationTest {
         System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated hone should match first value');   
     }
 
-
-    //wether 2 records of corect content
     @isTest static void validate_updateToInvalidPhone_phoneInvalid() {
         Test.setMock(HttpCalloutMock.class, new APIMock());
         PersonUpsertLogicWrapper.validateMultiple=true;
