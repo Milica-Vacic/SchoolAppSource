@@ -8,13 +8,15 @@ private class PhoneValidationTest {
         insert p;
         Test.stopTest();
 
-        List<Phone_Validation_Result__c> valResults = [select PhoneNumber__c, Person__c,API_Error__c,CountryPrefix__c,ErrorId__c from Phone_Validation_Result__c where Person__c=:p.Id];
+        List<Phone_Validation_Result__c> valResults = [select ValidatedFieldName__c, ValidatedFieldValue__c, PhoneNumber__c,
+            RequestProcessed__c,IsValid__c, NetworkCode__c, NetworkName__c, NetworkCountry__c, NationalFormat__c, CountryPrefix__c, 
+            NumberType__c, ErrorId__c, ErrorCause__c, Error__c, ErrorResolution__c, API_Error__c
+            from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created for new user');
         Phone_Validation_Result__c res = valResults[0];
         System.assertEquals('Phone__c', res.ValidatedFieldName__c, 'Incorrect value on Phone Validation Result for ValidatedFieldName__c');
         System.assertEquals(p.Phone__c, res.ValidatedFieldValue__c, 'Incorrect value on Phone Validation Result for ValidatedFieldValue__c');
-        System.assertEquals(p.Id, res.Person__c, 'Incorrect value on Phone Validation Result for Person__c');
-
+       
         System.assertEquals(p.Phone__c, res.PhoneNumber__c, 'Incorrect value on Phone Validation Result for PhoneNumber__c');
         System.assertEquals(true, res.RequestProcessed__c, 'Incorrect value on Phone Validation Result for RequestProcessed__c');
         System.assertEquals('Yes', res.IsValid__c, 'Incorrect value on Phone Validation Result for IsValid__c');
@@ -30,6 +32,40 @@ private class PhoneValidationTest {
         System.assertEquals(null, res.Error__c, 'Error__c should be null on succesful Phone Validation Result');
         System.assertEquals(null, res.ErrorResolution__c, 'ErrorResolution__c should be null on succesful Phone Validation Result');
         System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on succesful Phone Validation Result');
+    }
+
+    @isTest static void validate_personCreationBadPhone_errorResult() {
+        Person__c p=TestDataFactory.createPeople('test', 1)[0];
+        p.Phone__c='abc';
+        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.startTest();
+        insert p;
+        Test.stopTest();
+
+        List<Phone_Validation_Result__c> valResults = [select ValidatedFieldName__c, ValidatedFieldValue__c, PhoneNumber__c,
+            RequestProcessed__c,IsValid__c, NetworkCode__c, NetworkName__c, NetworkCountry__c, NationalFormat__c, CountryPrefix__c, 
+            NumberType__c, ErrorId__c, ErrorCause__c, Error__c, ErrorResolution__c, API_Error__c
+            from Phone_Validation_Result__c where Person__c=:p.Id];
+        System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created for new user');
+        Phone_Validation_Result__c res = valResults[0];
+        System.assertEquals('Phone__c', res.ValidatedFieldName__c, 'Incorrect value on Phone Validation Result for ValidatedFieldName__c');
+        System.assertEquals(p.Phone__c, res.ValidatedFieldValue__c, 'Incorrect value on Phone Validation Result for ValidatedFieldValue__c');
+    
+        System.assertEquals(null, res.PhoneNumber__c, 'Incorrect value on Phone Validation Result for PhoneNumber__c');
+        System.assertEquals(null, res.RequestProcessed__c, 'Incorrect value on Phone Validation Result for RequestProcessed__c');
+        System.assertEquals(null, res.IsValid__c, 'Incorrect value on Phone Validation Result for IsValid__c');
+        System.assertEquals(null, res.NetworkCode__c, 'Incorrect value on Phone Validation Result for NetworkCode__c');
+        System.assertEquals(null, res.NetworkName__c, 'Incorrect value on Phone Validation Result for NetworkName__c');
+        System.assertEquals(null, res.NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');
+        System.assertEquals(null, res.NationalFormat__c, 'Incorrect value on Phone Validation Result for NationalFormat__c');
+        System.assertEquals(null, res.CountryPrefix__c, 'Incorrect value on Phone Validation Result for CountryPrefix__c');
+        System.assertEquals(null, res.NumberType__c, 'Incorrect value on Phone Validation Result for NumberType__c');
+
+        System.assertEquals(1002, res.ErrorId__c, 'ErrorId__c should not be null on bad Phone Validation Result');
+        System.assertEquals('Invalid phone number format', res.ErrorCause__c, 'ErrorCause__c should not be null on bad Phone Validation Result');
+        System.assertEquals('The phone number provided is not in a valid international format.', res.Error__c, 'Error__c should not be null on bad Phone Validation Result');
+        System.assertEquals('Please ensure that you supply a phone number and try again.', res.ErrorResolution__c, 'ErrorResolution__c should not be null on bad Phone Validation Result');
+        System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on bad Phone Validation Result');
     }
 
     //person created wrong phone
