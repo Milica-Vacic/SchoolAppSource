@@ -148,5 +148,17 @@ private class PhoneValidationTest {
         System.assertEquals(p.Country__c, valResults[0].NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');  
     }
 
+    @isTest static void validate_noCountry_emptyCountry() {
+        Test.setMock(HttpCalloutMock.class, new APIMock());
+        Person__c p=TestDataFactory.createPeople('test', 1)[0];
+        p.Phone__c='0604009911';
+        PhoneValidationAPI.ValidationAPISettingsInstance='NoCountry';
+        Test.startTest();
+        insert p;
+        Test.stopTest();
+        List<Phone_Validation_Result__c> valResults = [select NetworkCountry__c from Phone_Validation_Result__c where Person__c=:p.Id order by CreatedDate asc];
+        System.assertEquals(null, valResults[0].NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');  
+    }
+
 
 }

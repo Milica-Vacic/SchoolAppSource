@@ -23,7 +23,10 @@ public with sharing class PhoneValidationAPI {
         ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance(ValidationAPISettingsInstance);
         if(mdt==null) mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
         String endpoint = '{0}?Key={1}&Phone={2}&Country={3}';
-        String country=!String.isBlank(personCountry)?personCountry:mdt?.DefaultCountry__c;
+        String country;
+        if (!String.isBlank(personCountry)) country=personCountry;
+        else if (!String.isBlank(mdt?.DefaultCountry__c)) country=mdt?.DefaultCountry__c;
+        else country='';
         endpoint=String.format(endpoint,new List<String>{mdt?.URL__c, mdt?.APIToken__c, EncodingUtil.urlEncode(newPhone, 'ASCII'), country});
         request.setEndPoint(endpoint);
         request.setMethod('GET');
