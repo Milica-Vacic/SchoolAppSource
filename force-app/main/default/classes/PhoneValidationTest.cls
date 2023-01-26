@@ -93,8 +93,19 @@ private class PhoneValidationTest {
 
     }
 
-    //person updated, but phone same
-    //multiple records inserted simultanuously
+    @isTest static void validate_multiPersonCreation_singleValidation() {
+        List<Person__c> people=TestDataFactory.createPeople('test', 5);
+        for(Person__c p: people) p.Phone__c='0604009911';
+        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.startTest();
+        insert people;
+        Test.stopTest();
+        Map<Id, Person__c> pmap = new Map<Id, Person__c>(people);
+        List<Phone_Validation_Result__c> valResults = [select Name from Phone_Validation_Result__c where Person__c in :pmap.keySet()];
+        System.assertEquals(1, valResults.size(), 'Phone should have only been validated for a single user');        
+    }
+
+
     //triggering personUpsert twice in the same execution context? same context between start and end test??
     //dto test
 
