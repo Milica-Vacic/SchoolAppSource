@@ -144,7 +144,7 @@ private class PhoneValidationTest {
         Test.startTest();
         insert p;
         Test.stopTest();
-        List<Phone_Validation_Result__c> valResults = [select NetworkCountry__c from Phone_Validation_Result__c where Person__c=:p.Id order by CreatedDate asc];
+        List<Phone_Validation_Result__c> valResults = [select NetworkCountry__c from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(p.Country__c, valResults[0].NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');  
     }
 
@@ -156,8 +156,24 @@ private class PhoneValidationTest {
         Test.startTest();
         insert p;
         Test.stopTest();
-        List<Phone_Validation_Result__c> valResults = [select NetworkCountry__c from Phone_Validation_Result__c where Person__c=:p.Id order by CreatedDate asc];
+        List<Phone_Validation_Result__c> valResults = [select NetworkCountry__c from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(null, valResults[0].NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');  
+    }
+
+    @isTest static void validate_createWith2Phones_validateBoth() {
+        Test.setMock(HttpCalloutMock.class, new APIMock());
+        Person__c p=TestDataFactory.createPeople('test', 1)[0];
+        p.Phone__c='0604009911';
+        p.Work_Phone__c='0604009915';
+        Test.startTest();
+        insert p;
+        Test.stopTest();
+        List<Phone_Validation_Result__c> valResults = [select ValidatedFieldName__c, ValidatedFieldValue__c from Phone_Validation_Result__c where Person__c=:p.Id];
+        System.assertEquals(2, valResults.size(), 'Exactly two phone validation results should have been created');
+        for (Phone_Validation_Result__c result:valResults){
+            System.assertEquals(p.get(result.ValidatedFieldName__c), result.ValidatedFieldValue__c, 'ValidatedFieldName__c and ValidatedFieldValue__c do not match up with person');  
+        }
+
     }
 
 
