@@ -68,8 +68,31 @@ private class PhoneValidationTest {
         System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on bad Phone Validation Result');
     }
 
-    //person created wrong phone
-    //person created no phone
+    @isTest static void validate_personCreationNoPhone_noValidation() {
+        Person__c p=TestDataFactory.createPeople('test', 1)[0];
+        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.startTest();
+        insert p;
+        Test.stopTest();
+
+        List<Phone_Validation_Result__c> valResults = [select Name from Phone_Validation_Result__c where Person__c=:p.Id];
+        System.assertEquals(0, valResults.size(), 'No phone validation results should have been created for new user');        
+    }
+
+    @isTest static void validate_updateWithSamePhone_noValidation() {
+        Person__c p=TestDataFactory.createPeople('test', 1)[0];
+        p.Phone__c='0604009911';
+        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        insert p;
+        p.First_Name__c='newName';
+        Test.startTest();
+        update p;
+        Test.stopTest();
+        List<Phone_Validation_Result__c> valResults = [select Name from Phone_Validation_Result__c where Person__c=:p.Id];
+        System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created for new user');      
+
+    }
+
     //person updated, but phone same
     //multiple records inserted simultanuously
     //triggering personUpsert twice in the same execution context? same context between start and end test??
