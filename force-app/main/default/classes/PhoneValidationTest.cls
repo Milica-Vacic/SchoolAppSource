@@ -105,6 +105,20 @@ private class PhoneValidationTest {
         System.assertEquals(1, valResults.size(), 'Phone should have only been validated for a single user');        
     }
 
+    @isTest static void validate_multiTrigger_singleValidation() {
+        Person__c p=TestDataFactory.createPeople('test', 1)[0];
+        p.Phone__c='0604009911';
+        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.startTest();
+        insert p;
+        p.Phone__c='0604009915';
+        update p;
+        Test.stopTest();
+        List<Phone_Validation_Result__c> valResults = [select PhoneNumber__c from Phone_Validation_Result__c where Person__c=:p.Id];
+        System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created'); 
+        System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated hone should match first value');   
+    }
+
 
     //triggering personUpsert twice in the same execution context? same context between start and end test??
     //dto test
