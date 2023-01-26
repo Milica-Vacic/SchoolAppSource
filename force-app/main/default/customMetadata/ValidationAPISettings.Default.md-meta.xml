@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">HZ78-YC24-KD97-RA63</value>
     </values>
     <values>
+        <field>DefaultCountry__c</field>
+        <value xsi:type="xsd:string">SRB</value>
+    </values>
+    <values>
         <field>URL__c</field>
         <value xsi:type="xsd:string">https://api.addressy.com/PhoneNumberValidation/Interactive/Validate/v2.2/json3.ws</value>
     </values>
