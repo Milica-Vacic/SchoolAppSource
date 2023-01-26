@@ -3,7 +3,7 @@ private class PhoneValidationTest {
     @isTest static void validate_personCreationWithPhone_phoneValid() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='+381604009911';
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -37,7 +37,7 @@ private class PhoneValidationTest {
     @isTest static void validate_personCreationBadPhone_errorResult() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='abc';
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -70,7 +70,7 @@ private class PhoneValidationTest {
 
     @isTest static void validate_personCreationNoPhone_noValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -82,7 +82,7 @@ private class PhoneValidationTest {
     @isTest static void validate_updateWithSamePhone_noValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         insert p;
         p.First_Name__c='newName';
         Test.startTest();
@@ -96,7 +96,7 @@ private class PhoneValidationTest {
     @isTest static void validate_multiPersonCreation_singleValidation() {
         List<Person__c> people=TestDataFactory.createPeople('test', 5);
         for(Person__c p: people) p.Phone__c='0604009911';
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         Test.startTest();
         insert people;
         Test.stopTest();
@@ -108,7 +108,7 @@ private class PhoneValidationTest {
     @isTest static void validate_multiTrigger_singleValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         Test.startTest();
         insert p;
         p.Phone__c='0604009915';
@@ -122,7 +122,7 @@ private class PhoneValidationTest {
 
     //wether 2 records of corect content
     @isTest static void validate_updateToInvalidPhone_phoneInvalid() {
-        Test.setMock(HttpCalloutMock.class, new PhoneValidationAPIMock());
+        Test.setMock(HttpCalloutMock.class, new APIMock());
         PersonUpsertLogicWrapper.validateMultiple=true;
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';

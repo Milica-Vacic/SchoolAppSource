@@ -3,7 +3,6 @@ public with sharing class PersonUpsertLogicWrapper {
     @TestVisible public static Boolean validateMultiple=false;
     @TestVisible public static Boolean skipTrigger=false;
 
-
     public void validatePhoneOnce(Person__c newRec, Person__c oldRec, List<String> fieldsToValidate){
         if (skipTrigger || (alreadyValidated && !validateMultiple)) return;
         for(String field:fieldsToValidate){
