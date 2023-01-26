@@ -10,7 +10,7 @@ private class PhoneValidationTest {
 
         List<Phone_Validation_Result__c> valResults = [select ValidatedFieldName__c, ValidatedFieldValue__c, PhoneNumber__c,
             RequestProcessed__c,IsValid__c, NetworkCode__c, NetworkName__c, NetworkCountry__c, NationalFormat__c, CountryPrefix__c, 
-            NumberType__c, ErrorId__c, ErrorCause__c, Error__c, ErrorResolution__c, API_Error__c
+            NumberType__c, ErrorId__c, Cause__c, Error__c, Resolution__c, API_Error__c
             from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created for new user');
         Phone_Validation_Result__c res = valResults[0];
@@ -24,13 +24,13 @@ private class PhoneValidationTest {
         System.assertEquals('A1', res.NetworkName__c, 'Incorrect value on Phone Validation Result for NetworkName__c');
         System.assertEquals('SRB', res.NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');
         System.assertEquals('0604009911', res.NationalFormat__c, 'Incorrect value on Phone Validation Result for NationalFormat__c');
-        System.assertEquals('381', res.CountryPrefix__c, 'Incorrect value on Phone Validation Result for CountryPrefix__c');
+        System.assertEquals(381, res.CountryPrefix__c, 'Incorrect value on Phone Validation Result for CountryPrefix__c');
         System.assertEquals('MOBILE', res.NumberType__c, 'Incorrect value on Phone Validation Result for NumberType__c');
 
         System.assertEquals(null, res.ErrorId__c, 'ErrorId__c should be null on succesful Phone Validation Result');
-        System.assertEquals(null, res.ErrorCause__c, 'ErrorCause__c should be null on succesful Phone Validation Result');
+        System.assertEquals(null, res.Cause__c, 'Cause__c should be null on succesful Phone Validation Result');
         System.assertEquals(null, res.Error__c, 'Error__c should be null on succesful Phone Validation Result');
-        System.assertEquals(null, res.ErrorResolution__c, 'ErrorResolution__c should be null on succesful Phone Validation Result');
+        System.assertEquals(null, res.Resolution__c, 'Resolution__c should be null on succesful Phone Validation Result');
         System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on succesful Phone Validation Result');
     }
 
@@ -44,7 +44,7 @@ private class PhoneValidationTest {
 
         List<Phone_Validation_Result__c> valResults = [select ValidatedFieldName__c, ValidatedFieldValue__c, PhoneNumber__c,
             RequestProcessed__c,IsValid__c, NetworkCode__c, NetworkName__c, NetworkCountry__c, NationalFormat__c, CountryPrefix__c, 
-            NumberType__c, ErrorId__c, ErrorCause__c, Error__c, ErrorResolution__c, API_Error__c
+            NumberType__c, ErrorId__c, Cause__c, Error__c, Resolution__c, API_Error__c
             from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created for new user');
         Phone_Validation_Result__c res = valResults[0];
@@ -52,7 +52,7 @@ private class PhoneValidationTest {
         System.assertEquals(p.Phone__c, res.ValidatedFieldValue__c, 'Incorrect value on Phone Validation Result for ValidatedFieldValue__c');
     
         System.assertEquals(null, res.PhoneNumber__c, 'Incorrect value on Phone Validation Result for PhoneNumber__c');
-        System.assertEquals(null, res.RequestProcessed__c, 'Incorrect value on Phone Validation Result for RequestProcessed__c');
+        System.assertEquals(false, res.RequestProcessed__c, 'Incorrect value on Phone Validation Result for RequestProcessed__c');
         System.assertEquals(null, res.IsValid__c, 'Incorrect value on Phone Validation Result for IsValid__c');
         System.assertEquals(null, res.NetworkCode__c, 'Incorrect value on Phone Validation Result for NetworkCode__c');
         System.assertEquals(null, res.NetworkName__c, 'Incorrect value on Phone Validation Result for NetworkName__c');
@@ -61,10 +61,10 @@ private class PhoneValidationTest {
         System.assertEquals(null, res.CountryPrefix__c, 'Incorrect value on Phone Validation Result for CountryPrefix__c');
         System.assertEquals(null, res.NumberType__c, 'Incorrect value on Phone Validation Result for NumberType__c');
 
-        System.assertEquals(1002, res.ErrorId__c, 'ErrorId__c should not be null on bad Phone Validation Result');
-        System.assertEquals('Invalid phone number format', res.ErrorCause__c, 'ErrorCause__c should not be null on bad Phone Validation Result');
-        System.assertEquals('The phone number provided is not in a valid international format.', res.Error__c, 'Error__c should not be null on bad Phone Validation Result');
-        System.assertEquals('Please ensure that you supply a phone number and try again.', res.ErrorResolution__c, 'ErrorResolution__c should not be null on bad Phone Validation Result');
+        System.assertEquals(1002, res.ErrorId__c, 'ErrorId__c has incorrect value on bad Phone Validation Result');
+        System.assertEquals('Invalid phone number format', res.Error__c, 'Error__c has incorrect value on bad Phone Validation Result');
+        System.assertEquals('The phone number provided is not in a valid international format.', res.Cause__c, 'Cause__c has incorrect value on bad Phone Validation Result');
+        System.assertEquals('Please ensure that you supply a phone number and try again.', res.Resolution__c, 'Resolution__c has incorrect value on bad Phone Validation Result');
         System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on bad Phone Validation Result');
     }
 

@@ -16,8 +16,8 @@ public with sharing class PhoneValidationAPI {
         Schema.SObjectType targetType = Schema.getGlobalDescribe().get('Phone_Validation_Result__c');
         Map<String, Schema.SObjectField> fieldMap = targetType.getDescribe().fields.getMap();
             for (Schema.SObjectField field : fieldMap.values()) {
-                if (item.get(field.getDescribe().getLabel())!=null && field.getDescribe().isUpdateable()){
-                    validRes.put(field.getDescribe().getName(), item.get(field.getDescribe().getLabel()));
+                if (item.get(field.getDescribe().getName().remove('__c'))!=null && field.getDescribe().isUpdateable()){
+                    validRes.put(field.getDescribe().getName(), item.get(field.getDescribe().getName().remove('__c')));
                 }
             }
         validRes.ErrorId__c=(Decimal)item.get('Id');
