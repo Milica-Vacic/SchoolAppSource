@@ -1,12 +1,6 @@
 public with sharing class PhoneValidationAPI {
     private static PhoneValidationAPI instance = null;
     private PhoneValidationAPI(){}
-/*     public static PhoneValidationAPI getInstance(){
-           if(instance == null){
-              instance = new PhoneValidationAPI();
-            }
-        return instance;
-    } */
 
     private static Phone_Validation_Result__c mapToSObject(HttpResponse res){
         PhoneValidationResultDTO dto = PhoneValidationResultDTO.parse(res.getbody());
