@@ -8,8 +8,8 @@ public class EmailSchedulerTest {
         people.addAll(students);
         insert people;
         List<Course__c> courses=TestDataFactory.createCourses('Course', 1, tutor[0].Id, 5);
-        Test.startTest();
         insert courses;
+        Test.startTest();
         List<Participation__c> partics = TestDataFactory.createParticipations(courses, students);
         insert partics;
         String jobId = System.schedule('execute_NoEmptyCourses_NoEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
@@ -31,8 +31,8 @@ public class EmailSchedulerTest {
         insert tutor;
         List<Course__c> courses=TestDataFactory.createCourses('FirstCourse', 1, tutor[0].Id, 5);
         courses.addAll(TestDataFactory.createCourses('SecondCourse', 1, tutor[1].Id, 5));
-        Test.startTest();
         insert courses;
+        Test.startTest();
         String jobId = System.schedule('execute_SingleEmptyCourse_OneEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
         System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should have been sent');
         Test.stopTest();
@@ -52,8 +52,8 @@ public class EmailSchedulerTest {
         insert tutor;
         List<Course__c> courses=TestDataFactory.createCourses('FirstCourse', 1, tutor[0].Id, 5);
         courses.addAll(TestDataFactory.createCourses('SecondCourse', 2, tutor[1].Id, 5));
-        Test.startTest();
         insert courses;
+        Test.startTest();
         String jobId = System.schedule('execute_SingleEmptyCourse_OneEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
         System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should have been sent');
         Test.stopTest();
@@ -76,8 +76,8 @@ public class EmailSchedulerTest {
         for(Person__c t:tutor){
             courses.addAll(TestDataFactory.createCourses('Course'+t.Id, 1, t.Id, 5));
         }
-        Test.startTest();
         insert courses;
+        Test.startTest();
         String jobId = System.schedule('execute_SingleEmptyCourse_OneEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
         System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should have been sent');
         Test.stopTest();
