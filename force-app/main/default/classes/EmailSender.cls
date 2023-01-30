@@ -1,4 +1,5 @@
 public with sharing class EmailSender {
+    @TestVisible public static Map<Id, Messaging.SingleEmailMessage> tutor_email;
 
     public static void sendEmptyCourseAlert(){
             List<Course__c> emptyCourses=[SELECT Name, Id, Tutor__r.Id, Tutor__r.Name, Tutor__r.Email__c
@@ -25,6 +26,9 @@ public with sharing class EmailSender {
                 }
             }
             List<Messaging.SendEmailResult> res= Messaging.sendEmail(msgMap.values());
-            if (Test.isRunningTest()) EmailScheduler.sendMailResults=res;                
+            if (Test.isRunningTest()){
+                EmailScheduler.sendMailResults=res;
+                tutor_email=msgMap;
+            }              
     }
 }

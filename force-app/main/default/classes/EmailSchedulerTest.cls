@@ -24,6 +24,7 @@ public class EmailSchedulerTest {
   
         System.assertEquals(null, EmailScheduler.sendMailResults, 'No emails should have been sent');
     }
+    
     @isTest public static void execute_SingleEmptyCourse_OneEmailPerTutor(){
 
         List<Person__c> tutor= TestDataFactory.createPeople('Tutor', 2, 'Tutor');
@@ -39,15 +40,14 @@ public class EmailSchedulerTest {
         System.assertEquals(2, EmailScheduler.sendMailResults.size(), 'Number of sent emails is incorrect');
         for(Messaging.SendEmailResult res:EmailScheduler.sendMailResults){
             System.assert(res.isSuccess(), 'Email was not succesfully sent');
-            if (!res.isSuccess()){
-                for (Messaging.SendEmailError er:res.getErrors()){
-                    System.debug(er.getMessage());
-                }
-            }
         }
+        Messaging.SingleEmailMessage testMsg=EmailSender.tutor_email.get(tutor[0].Id);
+        String expected='Dear Tutor0 Tutor0,<br><br> some of the courses you teach have no attendees at present:<br><a href={0}/{1}>FirstCourse0</a>';
+        expected=String.format(expected,new List<String>{URL.getSalesforceBaseUrl().toExternalForm(), courses[0].Id});
+        System.assertEquals(expected,testMsg.getHtmlBody(),'Invalid email body');
 
     }
-    @isTest public static void execute_MultipleEmptyCourses_MultipleEmailsSent(){
+    @isTest public static void execute_MultipleEmptyCourses_OneEmailPerTutor(){
         List<Person__c> tutor= TestDataFactory.createPeople('Tutor', 2, 'Tutor');
         insert tutor;
         List<Course__c> courses=TestDataFactory.createCourses('FirstCourse', 1, tutor[0].Id, 5);
@@ -57,15 +57,14 @@ public class EmailSchedulerTest {
         String jobId = System.schedule('execute_SingleEmptyCourse_OneEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
         System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should have been sent');
         Test.stopTest();
-  
+
+        Messaging.SingleEmailMessage testMsg=EmailSender.tutor_email.get(tutor[1].Id);
+        String expected='Dear Tutor1 Tutor1,<br><br> some of the courses you teach have no attendees at present:<br><a href={0}/{1}>SecondCourse0</a><br><a href={2}/{3}>SecondCourse1</a>';
+        expected=String.format(expected,new List<String>{URL.getSalesforceBaseUrl().toExternalForm(), courses[1].Id,URL.getSalesforceBaseUrl().toExternalForm(),courses[2].Id});
+        System.assertEquals(expected,testMsg.getHtmlBody(),'Invalid email body');
         System.assertEquals(2, EmailScheduler.sendMailResults.size(), 'Number of sent emails is incorrect');
         for(Messaging.SendEmailResult res:EmailScheduler.sendMailResults){
             System.assert(res.isSuccess(), 'Email was not succesfully sent');
-            if (!res.isSuccess()){
-                for (Messaging.SendEmailError er:res.getErrors()){
-                    System.debug(er.getMessage());
-                }
-            }
         }
         
     }

@@ -31,6 +31,7 @@ public class TestDataFactory {
         List<Course__c> courses = new List<Course__c>();
         for (Integer i=0;i<n;i++){
             Course__c c=new Course__c();
+            c.Name=name+i;
             c.Tutor__c=tutor;
             c.Start_Date__c=Date.today();
             c.End_Date__c=Date.today()+duration;
