@@ -24,7 +24,7 @@ public class EmailSchedulerTest {
   
         System.assertEquals(null, EmailScheduler.sendMailResults, 'No emails should have been sent');
     }
-    @isTest public static void execute_SingleEmptyCourse_OneEmailSent(){
+    @isTest public static void execute_SingleEmptyCourse_OneEmailPerTutor(){
 
         List<Person__c> tutor= TestDataFactory.createPeople('Tutor', 2, 'Tutor');
         insert tutor;
@@ -48,7 +48,25 @@ public class EmailSchedulerTest {
 
     }
     @isTest public static void execute_MultipleEmptyCourses_MultipleEmailsSent(){
-        //make sure some profesors have a cingle course and others have multiple
+        List<Person__c> tutor= TestDataFactory.createPeople('Tutor', 2, 'Tutor');
+        insert tutor;
+        List<Course__c> courses=TestDataFactory.createCourses('FirstCourse', 1, tutor[0].Id, 5);
+        courses.addAll(TestDataFactory.createCourses('SecondCourse', 2, tutor[1].Id, 5));
+        insert courses;
+        Test.startTest();
+        String jobId = System.schedule('execute_SingleEmptyCourse_OneEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
+        System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should have been sent');
+        Test.stopTest();
+  
+        System.assertEquals(2, EmailScheduler.sendMailResults.size(), 'Number of sent emails is incorrect');
+        for(Messaging.SendEmailResult res:EmailScheduler.sendMailResults){
+            System.assert(res.isSuccess(), 'Email was not succesfully sent');
+            if (!res.isSuccess()){
+                for (Messaging.SendEmailError er:res.getErrors()){
+                    System.debug(er.getMessage());
+                }
+            }
+        }
         
     }
 }
