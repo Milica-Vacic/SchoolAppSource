@@ -1,8 +1,6 @@
 public with sharing class EmailSender {
-    public EmailSender() {
-    }
-  
-    public void sendEmptyCourseAlert(){
+
+    public static void sendEmptyCourseAlert(){
             List<Course__c> emptyCourses=[SELECT Name, Id, Tutor__r.Id, Tutor__r.Name, Tutor__r.Email__c
                 from Course__c WHERE Attendees_Count__c=0 AND Completed__c=false];
             if (emptyCourses.size()==0) return;
@@ -26,8 +24,7 @@ public with sharing class EmailSender {
                     msgMap.get(c.Tutor__r.Id).setHtmlBody(msgMap.get(c.Tutor__r.Id).getHtmlBody()+addBody);
                 }
             }
-            Messaging.sendEmail(msgMap.values());
-            
-            
+            List<Messaging.SendEmailResult> res= Messaging.sendEmail(msgMap.values());
+            if (Test.isRunningTest()) EmailScheduler.sendMailResults=res;                
     }
 }
