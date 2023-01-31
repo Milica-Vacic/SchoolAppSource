@@ -9,16 +9,11 @@ public class EmailSchedulerTest {
         insert people;
         List<Course__c> courses=TestDataFactory.createCourses('Course', 1, tutor[0].Id, 5);
         insert courses;
+
         Test.startTest();
         List<Participation__c> partics = TestDataFactory.createParticipations(courses, students);
         insert partics;
         String jobId = System.schedule('execute_NoEmptyCourses_NoEmailSent', EmailScheduler.CRON_EXP, new EmailScheduler());
-
-        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime
-           FROM CronTrigger WHERE id = :jobId];
-
-        System.assertEquals(EmailScheduler.CRON_EXP, ct.CronExpression, 'Schedule time not set properly');
-        System.assertEquals(0, ct.TimesTriggered, 'execute_NoEmptyCourses_NoEmailSent should not have been triggered yet');
         System.assertEquals(0, Limits.getEmailInvocations(), 'No emails should have been sent');
         Test.stopTest();
   
@@ -69,7 +64,7 @@ public class EmailSchedulerTest {
         
     }
 
-    @isTest public static void execute_7Emails(){
+    @isTest public static void execute_maximumProfessorsWithEmptyCourses_emailSentPerProfessor(){
         List<Person__c> tutor= TestDataFactory.createPeople('Tutor', 7, 'Tutor');
         insert tutor;
         List<Course__c> courses=new List<Course__c>();

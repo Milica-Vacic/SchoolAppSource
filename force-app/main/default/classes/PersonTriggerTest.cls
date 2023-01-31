@@ -22,6 +22,7 @@ public class PersonTriggerTest {
         Person__c newPers=[select Name from Person__c where Id=:testPers.Id limit 1];
         System.assertEquals(testPers.First_Name__c+' '+testPers.Last_Name__c, newPers.Name, 'Full name is incorrect');
     }
+    
     @isTest public static void concatFullName_updateNoChange_noMethodRun(){
         Person__c testPers= TestDataFactory.createPeople('Test', 1)[0];
         insert testPers;
@@ -32,8 +33,4 @@ public class PersonTriggerTest {
         System.assertEquals(0, PersonTriggerLogicWrapper.hasConcatedCount, 'Method ran when there was no name change');
         Test.stopTest();
     }
-
-    //update without change
-
-    //insert then update, matches last value
 }
