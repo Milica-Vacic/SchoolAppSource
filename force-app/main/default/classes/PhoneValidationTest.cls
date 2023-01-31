@@ -117,7 +117,7 @@ private class PhoneValidationTest {
         Test.stopTest();
         List<Phone_Validation_Result__c> valResults = [select PhoneNumber__c from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created'); 
-        System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated hone should match first value');   
+        System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated phone should match first value');   
     }
 
     @isTest static void validate_updateToInvalidPhone_phoneInvalid() {
