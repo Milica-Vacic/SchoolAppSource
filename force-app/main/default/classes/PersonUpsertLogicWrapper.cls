@@ -7,7 +7,7 @@ public with sharing class PersonUpsertLogicWrapper {
         if (skipTrigger || (alreadyValidated && !validateMultiple)) return;
         for(String field:fieldsToValidate){
             if (!String.isBlank((String)newRec.get(field)) && !(newRec.get(field)==oldRec?.get(field))){
-                PhoneValidationAPI.validate(newRec.Id,(String)newRec.get(field),field);
+                PhoneValidationAPI.validate(newRec.Id,(String)newRec.get(field),field, newRec.Country__c);
             }
         }
         alreadyValidated=true;

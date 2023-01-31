@@ -14,7 +14,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PhoneValidationAPIMock</apexClass>
+        <apexClass>APIMock</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

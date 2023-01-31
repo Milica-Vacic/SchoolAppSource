@@ -1,4 +1,5 @@
 public with sharing class PhoneValidationAPI {
+    public static String ValidationAPISettingsInstance='Default';
 
     private static Phone_Validation_Result__c mapToSObject(HttpResponse res){
         PhoneValidationResultDTO dto = PhoneValidationResultDTO.parse(res.getbody());
@@ -17,11 +18,16 @@ public with sharing class PhoneValidationAPI {
     }
 
     @future(callout=true)
-    public static void validate(ID personId, String newPhone, String fieldName) {
+    public static void validate(ID personId, String newPhone, String fieldName, String personCountry) {
         HttpRequest request = new HttpRequest();
-        ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
-        String endpoint = '{0}?Key={1}&Phone={2}';
-        endpoint=String.format(endpoint,new List<String>{mdt?.URL__c, mdt?.APIToken__c, EncodingUtil.urlEncode(newPhone, 'ASCII')});
+        ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance(ValidationAPISettingsInstance);
+        if(mdt==null) mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
+        String endpoint = '{0}?Key={1}&Phone={2}&Country={3}';
+        String country;
+        if (!String.isBlank(personCountry)) country=personCountry;
+        else if (!String.isBlank(mdt?.DefaultCountry__c)) country=mdt?.DefaultCountry__c;
+        else country='';
+        endpoint=String.format(endpoint,new List<String>{mdt?.URL__c, mdt?.APIToken__c, EncodingUtil.urlEncode(newPhone, 'ASCII'), country});
         request.setEndPoint(endpoint);
         request.setMethod('GET');
         HttpResponse res = new HTTP().send(request);  
