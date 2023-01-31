@@ -1,9 +1,25 @@
-public with sharing class PersonUpsertLogicWrapper {
+public with sharing class PersonTriggerLogicWrapper {
+
     private static Boolean alreadyValidated=false;
     private  static List<String> fieldsToValidate = new List<String>{'Phone__c', 'Work_Phone__c'};
     @TestVisible public static Boolean validateMultiple=false;
     @TestVisible public static Boolean skipTrigger=false;
     @TestVisible public static Integer hasConcatedCount=0;
+
+    public void decideActions(){
+        switch on Trigger.operationType {
+            when BEFORE_INSERT {
+                this.concatFullName((List<Person__c>)Trigger.New, (Map<Id,Person__c>)Trigger.oldMap);		
+            }
+            when AFTER_INSERT {	
+                this.validatePhoneOnce((Person__c)Trigger.New[0], (Person__c)Trigger.old?.get(0));
+            }	
+            when BEFORE_UPDATE {	
+                this.concatFullName((List<Person__c>)Trigger.New, (Map<Id,Person__c>)Trigger.oldMap);
+                validatePhoneOnce((Person__c)Trigger.New[0], (Person__c)Trigger.old?.get(0));	
+            }		
+        }
+    }
 
     public void validatePhoneOnce(Person__c newRec, Person__c oldRec){
         if (skipTrigger || (alreadyValidated && !validateMultiple)) return;

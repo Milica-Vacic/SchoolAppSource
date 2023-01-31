@@ -122,7 +122,7 @@ private class PhoneValidationTest {
 
     @isTest static void validate_updateToInvalidPhone_phoneInvalid() {
         Test.setMock(HttpCalloutMock.class, new APIMock());
-        PersonUpsertLogicWrapper.validateMultiple=true;
+        PersonTriggerLogicWrapper.validateMultiple=true;
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         insert p;
