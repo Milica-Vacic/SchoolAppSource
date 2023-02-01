@@ -41,7 +41,6 @@ public with sharing class PhoneValidationAPI {
         validRes.Person__c=personId;
         validRes.ValidatedFieldName__c=fieldName;
         validRes.ValidatedFieldValue__c=newPhone;
-        System.debug(validRes);
         insert validRes;
 
     }

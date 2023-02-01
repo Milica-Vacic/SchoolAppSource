@@ -102,8 +102,9 @@ private class PhoneValidationTest {
         insert people;
         Test.stopTest();
         Map<Id, Person__c> pmap = new Map<Id, Person__c>(people);
-        List<Phone_Validation_Result__c> valResults = [select Name from Phone_Validation_Result__c where Person__c in :pmap.keySet()];
-        System.assertEquals(1, valResults.size(), 'Phone should have only been validated for a single user');        
+        List<Phone_Validation_Result__c> valResults = [select Person__c, Name from Phone_Validation_Result__c where Person__c in :pmap.keySet()];
+        System.assertEquals(1, valResults.size(), 'Phone should have only been validated for a single user');
+        System.assertEquals(people[0].Id, valResults[0].Person__c, 'Validated phone belongs to an incorrect person');      
     }
 
     @isTest static void validate_multiTrigger_singleValidation() {
@@ -117,12 +118,12 @@ private class PhoneValidationTest {
         Test.stopTest();
         List<Phone_Validation_Result__c> valResults = [select PhoneNumber__c from Phone_Validation_Result__c where Person__c=:p.Id];
         System.assertEquals(1, valResults.size(), 'Exactly one phone validation result should have been created'); 
-        System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated hone should match first value');   
+        System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated phone should match first value');   
     }
 
-    @isTest static void validate_updateToInvalidPhone_phoneInvalid() {
+    @isTest static void validate_updateToInvalidPhoneWithValidateMultipleTrue_insertValidUpdateInvalid() {
         Test.setMock(HttpCalloutMock.class, new APIMock());
-        PersonUpsertLogicWrapper.validateMultiple=true;
+        PersonTriggerLogicWrapper.validateMultiple=true;
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         insert p;
