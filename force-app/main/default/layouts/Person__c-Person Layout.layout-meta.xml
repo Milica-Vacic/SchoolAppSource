@@ -31,6 +31,10 @@
                 <behavior>Required</behavior>
                 <field>Passing_Score_Threshold__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Work_Phone__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
