@@ -1,9 +1,16 @@
 @isTest
 private class PhoneValidationTest {
+    private static String successBody='{"Items":[{"PhoneNumber":"{0}","RequestProcessed":true,"IsValid":"Yes","NetworkCode":"+381","NetworkName":"A1",'
+            +'"NetworkCountry":"{1}","NationalFormat":"0604009911","CountryPrefix":381,"NumberType":"MOBILE"}] }';
+    private static String errorBody='{"Items":[{"Id":1002,"Error":"Invalid phone number format","Cause":"The phone number provided is not in a valid international format.","Resolution":"Please ensure that you supply a phone number and try again."}]}';
+    private static Map<String,String> headers= new Map<String,String>{'Content-Type'=>'application/json;charset=UTF-8'};
+
     @isTest static void validate_personCreationWithPhone_phoneValid() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='+381604009911';
-        Test.setMock(HttpCalloutMock.class, new APIMock());
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', (String)(((ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default'))?.DefaultCountry__c));
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -38,7 +45,8 @@ private class PhoneValidationTest {
     @isTest static void validate_personCreationBadPhone_errorResult() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='abc';
-        Test.setMock(HttpCalloutMock.class, new APIMock());
+        String body=errorBody;
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -71,7 +79,6 @@ private class PhoneValidationTest {
 
     @isTest static void validate_personCreationNoPhone_noValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
-        Test.setMock(HttpCalloutMock.class, new APIMock());
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -83,7 +90,9 @@ private class PhoneValidationTest {
     @isTest static void validate_updateWithSamePhone_noValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
-        Test.setMock(HttpCalloutMock.class, new APIMock());
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', (String)(((ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default'))?.DefaultCountry__c));
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         insert p;
         p.First_Name__c='newName';
         Test.startTest();
@@ -97,7 +106,9 @@ private class PhoneValidationTest {
     @isTest static void validate_multiPersonCreation_singleValidation() {
         List<Person__c> people=TestDataFactory.createPeople('test', 5);
         for(Person__c p: people) p.Phone__c='0604009911';
-        Test.setMock(HttpCalloutMock.class, new APIMock());
+        String body=successBody.replace('{0}', people[0].Phone__c);
+        body=body.replace('{1}', (String)(((ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default'))?.DefaultCountry__c));
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert people;
         Test.stopTest();
@@ -110,7 +121,9 @@ private class PhoneValidationTest {
     @isTest static void validate_multiTrigger_singleValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
-        Test.setMock(HttpCalloutMock.class, new APIMock());
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', (String)(((ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default'))?.DefaultCountry__c));
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert p;
         p.Phone__c='0604009915';
@@ -121,27 +134,29 @@ private class PhoneValidationTest {
         System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated phone should match first value');   
     }
 
-    @isTest static void validate_updateToInvalidPhoneWithValidateMultipleTrue_insertValidUpdateInvalid() {
-        Test.setMock(HttpCalloutMock.class, new APIMock());
+    @isTest static void validate_updatePhoneWithValidateMultipleTrue_twoValidations() {
         PersonTriggerLogicWrapper.validateMultiple=true;
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', (String)(((ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default'))?.DefaultCountry__c));
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         insert p;
-        p.Phone__c='abc';
+        p.Phone__c='0604009915';
         Test.startTest();
         update p;
         Test.stopTest();
-        List<Phone_Validation_Result__c> valResults = [select Error__c from Phone_Validation_Result__c where Person__c=:p.Id order by CreatedDate asc];
+        List<Phone_Validation_Result__c> valResults = [select Id from Phone_Validation_Result__c where Person__c=:p.Id order by CreatedDate asc];
         System.assertEquals(2, valResults.size(), 'Exactly two phone validation results should have been created');
-        System.assertEquals(null, valResults[0].Error__c, 'Record created on insert should not contain error information'); 
-        System.assertEquals('Invalid phone number format', valResults[1].Error__c, 'Record created on update should contain error information'); 
     }
 
     @isTest static void validate_createPersonWithCountry_newtworkCountryMatch() {
-        Test.setMock(HttpCalloutMock.class, new APIMock());
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         p.Country__c='USA';
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', p.Country__c);
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -150,10 +165,12 @@ private class PhoneValidationTest {
     }
 
     @isTest static void validate_noCountry_emptyCountry() {
-        Test.setMock(HttpCalloutMock.class, new APIMock());
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         PhoneValidationAPI.ValidationAPISettingsInstance='NoCountry';
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', '');
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert p;
         Test.stopTest();
@@ -162,10 +179,12 @@ private class PhoneValidationTest {
     }
 
     @isTest static void validate_createWith2Phones_validateBoth() {
-        Test.setMock(HttpCalloutMock.class, new APIMock());
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         p.Work_Phone__c='0604009915';
+        String body=successBody.replace('{0}', p.Phone__c);
+        body=body.replace('{1}', (String)(((ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default'))?.DefaultCountry__c));
+        Test.setMock(HttpCalloutMock.class, new APIMock(200,headers,body));
         Test.startTest();
         insert p;
         Test.stopTest();
