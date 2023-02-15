@@ -22,11 +22,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PersonUpsertLogicWrapper</apexClass>
+        <apexClass>PersonTriggerLogicWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PersonUpsertTest</apexClass>
+        <apexClass>PersonTriggerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

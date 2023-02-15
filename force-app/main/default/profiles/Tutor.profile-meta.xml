@@ -10,7 +10,7 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PersonUpsertLogicWrapper</apexClass>
+        <apexClass>PersonTriggerLogicWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
