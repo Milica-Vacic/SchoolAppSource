@@ -355,6 +355,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Person_CRUD</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Person__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
