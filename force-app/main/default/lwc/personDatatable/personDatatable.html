@@ -1,0 +1,17 @@
+<template>
+    <div class="slds-m-around--medium">
+        <lightning-button
+                label="Create Person"
+                onclick={handleCreatePerson}>
+        </lightning-button>
+    </div>
+    <div style="height: 300px;">
+        <lightning-datatable
+                key-field="id"
+                data={people.data}
+                columns={columns}
+                onrowaction={handleRowAction}>
+        </lightning-datatable>
+    </div>
+
+</template>
