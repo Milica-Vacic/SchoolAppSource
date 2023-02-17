@@ -98,4 +98,6 @@ public with sharing class PersonControllerTest {
             System.assertEquals(people[i].Id, wrappedPeople[i].Id, 'Id values do not match');
         }
     }
+
+    //getPersonWithRecordTypeList test with a minimal access user?????????
 }
