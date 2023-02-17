@@ -53,23 +53,31 @@ public with sharing class PersonControllerTest {
         PersonTriggerLogicWrapper.skipPhoneValidation=true;
         insert people;
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='AllPersonRecordsAccess'];
+        Profile profile = [SELECT Id FROM Profile WHERE Name='AllPersonRecordsAccess'];
         User user = new User(Alias = 'minusr', Email='minimumuser@testorg.com',
         EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-        LocaleSidKey='en_US', ProfileId = p.Id,
+        LocaleSidKey='en_US', ProfileId = profile.Id,
         TimeZoneSidKey='America/Los_Angeles',
         UserName='minimumuser@testorg.com');
         insert user;
 
         System.runAs(user) {   
             Test.startTest();
-            List<Person__c> returnedPeople = PersonController.getPersonList();
+            Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList());
             System.assertEquals(1, returnedPeople.size(),'Incorrect number of Person__c records returned');
-            try{
-                String phone=returnedPeople[0].Phone__c;
-                System.Assert(false,'Exception should have been thrown, Phone__c should not have been returned');
+            
+            for(Person__c p:people){
+                try{
+                    String phone=returnedPeople.get(p.Id).Phone__c;
+                    System.Assert(false,'Exception should have been thrown, Phone__c should not have been returned');
+                }
+                catch(SObjectException e){}
+                String name=String.format('{0} {1}', new List<String>{p.First_Name__c, p.Last_Name__c});
+                System.assertEquals(name, returnedPeople.get(p.Id).Name, 'Name does not match expected value');
+                System.assertEquals(p.Email__c, returnedPeople.get(p.Id).Email__c, 'Email does not match expected value');
+                System.assertEquals(p.RecordTypeId, returnedPeople.get(p.Id).RecordType.Id, 'RecordType does not match expected value');
             }
-            catch(SObjectException e){}
+
             Test.stopTest();
         }
     }
@@ -98,4 +106,5 @@ public with sharing class PersonControllerTest {
             System.assertEquals(people[i].Id, wrappedPeople[i].Id, 'Id values do not match');
         }
     }
+ 
 }

@@ -9,7 +9,9 @@ public with sharing class PersonWithRecordTypeName {
     public PersonWithRecordTypeName(Person__c p) {
         this.Id=p.Id;
         this.Name=p.Name;
-        this.Phone=p.Phone__c;
+        if (Schema.sObjectType.Person__c.fields.Phone__c.isAccessible()) {
+            this.Phone=p.Phone__c;
+        }
         this.Email=p.Email__c;
         this.RecordType=p.RecordType.Name;
         this.NameUrl='/'+p.Id;
