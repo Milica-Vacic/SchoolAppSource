@@ -1,17 +1,40 @@
 <template>
+
+    <lightning-card
+    title="All People">
     <div class="slds-m-around--medium">
         <lightning-button
                 label="Create Person"
                 onclick={handleCreatePerson}>
         </lightning-button>
     </div>
-    <div style="height: 300px;">
+    <div class="slds-var-m-around_medium">
+        <template lwc:if={people.data}>
+            <lightning-datatable
+                key-field="Id"
+                data={people.data}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+            >
+            </lightning-datatable>
+        </template>
+        <template lwc:elseif={people.error}>
+            <div class="slds-text-color_error">
+                An error occurred while loading all people
+            </div>
+        </template>
+    </div>
+</lightning-card>
+
+
+<!--     <div style="height: 300px;">
         <lightning-datatable
                 key-field="id"
                 data={people.data}
                 columns={columns}
                 onrowaction={handleRowAction}>
         </lightning-datatable>
-    </div>
+    </div> -->
 
 </template>

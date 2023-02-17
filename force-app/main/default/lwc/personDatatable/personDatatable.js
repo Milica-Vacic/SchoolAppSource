@@ -1,12 +1,6 @@
 
 import { LightningElement, wire } from 'lwc';
-import getPeople from '@salesforce/apex/PersonController.getPersonList';
-
-import NAME_FIELD from '@salesforce/schema/Person__c.Name';
-import PHONE_FIELD from '@salesforce/schema/Person__c.Phone__c';
-import EMAIL_FIELD from '@salesforce/schema/Person__c.Email__c';
-import TYPE_FIELD from '@salesforce/schema/Person__c.RecordTypeId';
-
+import getPeople from '@salesforce/apex/PersonController.getPersonWithRecordTypeList';
 
 const actions = [
     { label: 'Edit', name: 'edit' },
@@ -16,22 +10,25 @@ const actions = [
 const columns = [
     {
         label: 'Name',
-        fieldName: NAME_FIELD.fieldApiName,
+            fieldName: 'NameUrl',
+            type: 'url',
+            typeAttributes: {label: { fieldName: 'Name' }, 
+            target: '_blank'}
     },
     {
         label: 'Email',
-        fieldName: EMAIL_FIELD.fieldApiName,
+        fieldName: 'Email',
         type: 'email',
     },
     {
         label: 'Phone',
-        fieldName: PHONE_FIELD.fieldApiName,
+        fieldName: 'Phone',
         type: 'phone',
     },
     {
         label: 'Record Type',
-        fieldName: TYPE_FIELD.fieldApiName,
-        type: 'RecordType',
+        fieldName: 'RecordType',
+        type: 'Text',
     },
     {
         type: 'action',
@@ -45,7 +42,6 @@ export default class PersonDatatable extends LightningElement {
 
     @wire(getPeople)
     people;
-
 
     handleRowAction(event) {
         const actionName = event.detail.action.name;
