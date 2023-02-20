@@ -7,7 +7,7 @@ export default class SelectPersonRecordType extends LightningElement {
     error;
 
     @wire(getRecordTypes)
-    wiredContacts({ error, data }) {
+    wiredRecordTypes({ error, data }) {
         if (data) {
             this.options = data.map(x=>{
                 return {label:x.Name, value:x.Id};
