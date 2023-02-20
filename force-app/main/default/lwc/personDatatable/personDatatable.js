@@ -1,5 +1,5 @@
 
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire} from 'lwc';
 import getPeople from '@salesforce/apex/PersonController.getPersonWithRecordTypeList';
 
 const actions = [
@@ -39,6 +39,9 @@ const columns = [
 export default class PersonDatatable extends LightningElement {
     columns = columns;
     record = {};
+    isVisibleTypeModal=false;
+    isVisibleCreateModal=false;
+    selectedRecordType;
 
     @wire(getPeople)
     people;
@@ -57,6 +60,19 @@ export default class PersonDatatable extends LightningElement {
         }
     }
 
+    handleCreatePerson(event){
+        this.isVisibleTypeModal=true;
+    }
+
+    handleRecordTypeSelection(event){
+        this.isVisibleTypeModal=false;
+        this.isVisibleCreateModal=true;
+    }
+
+    handleSelectChange(event){
+        this.selectedRecordType=event.detail
+    }
+
     deleteRow(row) {
         //TO BE ADDED
     }
@@ -65,5 +81,7 @@ export default class PersonDatatable extends LightningElement {
     editRow(row) {
         //TO BE ADDED
     }
+
+
 
 }
