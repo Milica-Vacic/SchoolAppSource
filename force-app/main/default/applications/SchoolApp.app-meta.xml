@@ -14,7 +14,7 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Tutor_Page</content>
-        <formFactor>Small</formFactor>
+        <formFactor>Large</formFactor>
         <pageOrSobjectType>Person__c</pageOrSobjectType>
         <recordType>Person__c.Tutor</recordType>
         <type>Flexipage</type>
@@ -23,7 +23,7 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>Tutor_Page</content>
-        <formFactor>Large</formFactor>
+        <formFactor>Small</formFactor>
         <pageOrSobjectType>Person__c</pageOrSobjectType>
         <recordType>Person__c.Tutor</recordType>
         <type>Flexipage</type>
@@ -84,6 +84,7 @@
         <profile>StandardAul</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
+    <tabs>Person_CRUD</tabs>
     <tabs>standard-Feed</tabs>
     <tabs>Person__c</tabs>
     <tabs>Course__c</tabs>

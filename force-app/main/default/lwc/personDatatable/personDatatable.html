@@ -1,0 +1,30 @@
+<template>
+
+    <lightning-card
+    title="All People">
+    <div class="slds-m-around--medium">
+        <lightning-button
+                label="Create Person"
+                onclick={handleCreatePerson}>
+        </lightning-button>
+    </div>
+    <div class="slds-var-m-around_medium">
+        <template lwc:if={people}>
+            <lightning-datatable
+                key-field="Id"
+                data={people}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+            >
+            </lightning-datatable>
+        </template>
+        <template lwc:elseif={error}>
+            <div class="slds-text-color_error">
+                {error.body}
+            </div>
+        </template>
+    </div>
+</lightning-card>
+
+</template>
