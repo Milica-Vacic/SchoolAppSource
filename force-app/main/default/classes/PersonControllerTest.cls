@@ -82,29 +82,5 @@ public with sharing class PersonControllerTest {
         }
     }
 
-    @isTest
-    static void getPersonWithRecordTypeList_passPersonList_ReturnListOfWrappedPersonObjects() {
-        List<Person__c> people=TestDataFactory.createPeople('tutor', 2, 'Tutor');
-        people[0].Phone__c='0604009911';
-        PersonTriggerLogicWrapper.skipPhoneValidation=true;
-        insert people;
-        Test.startTest();
-        List<PersonWithRecordTypeName> wrappedPeople= PersonController.getPersonWithRecordTypeList();
-        Test.stopTest();
-        System.assertEquals(people.size(), wrappedPeople.size(), 'Returnd list is of incorrect length');
-        List<Id> typeIds= new List<Id>();
-        for(Person__c p: people){
-            typeIds.add(p.RecordTypeId);
-        }
-        Map<Id,RecordType> recordTypes=new Map<Id,RecordType>([select Id, Name from RecordType where Id in :typeIds]);
-        for(Integer i=0;i<people.size();i++){
-            System.assertEquals(String.format('{0} {1}', new List<String>{people[i].First_Name__c,people[i].Last_Name__c }), wrappedPeople[i].Name, 'Name values do not match');
-            System.assertEquals(people[i].Email__c, wrappedPeople[i].Email, 'Email values do not match');
-            System.assertEquals(people[i].Phone__c, wrappedPeople[i].Phone, 'Phone values do not match');
-            System.assertEquals(recordTypes.get(people[i].RecordTypeId).Name, wrappedPeople[i].RecordType, 'Record type name values do not match');
-            System.assertEquals('/'+people[i].Id, wrappedPeople[i].NameUrl, 'Name URL value is not correct');
-            System.assertEquals(people[i].Id, wrappedPeople[i].Id, 'Id values do not match');
-        }
-    }
  
 }

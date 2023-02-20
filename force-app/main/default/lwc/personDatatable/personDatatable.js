@@ -1,6 +1,9 @@
 
 import { LightningElement, wire } from 'lwc';
-import getPeople from '@salesforce/apex/PersonController.getPersonWithRecordTypeList';
+import getPeople from '@salesforce/apex/PersonController.getPersonList';
+import NAME_FIELD from '@salesforce/schema/Person__c.Name';
+import PHONE_FIELD from '@salesforce/schema/Person__c.Phone__c';
+import EMAIL_FIELD from '@salesforce/schema/Person__c.Email__c';
 
 const actions = [
     { label: 'Edit', name: 'edit' },
@@ -12,17 +15,17 @@ const columns = [
         label: 'Name',
             fieldName: 'NameUrl',
             type: 'url',
-            typeAttributes: {label: { fieldName: 'Name' }, 
+            typeAttributes: {label: { fieldName: NAME_FIELD.fieldApiName }, 
             target: '_blank'}
     },
     {
         label: 'Email',
-        fieldName: 'Email',
+        fieldName: EMAIL_FIELD.fieldApiName,
         type: 'email',
     },
     {
         label: 'Phone',
-        fieldName: 'Phone',
+        fieldName: PHONE_FIELD.fieldApiName,
         type: 'phone',
     },
     {
@@ -39,9 +42,30 @@ const columns = [
 export default class PersonDatatable extends LightningElement {
     columns = columns;
     record = {};
+    people;
+    error;
 
     @wire(getPeople)
-    people;
+    wiredPeople({ error, data }) {
+        if (data) {
+            this.people = data.map(x=>{
+                let y={};
+                for(const field in x){
+                    y[field]=x[field];
+                }
+                y.NameUrl=`/`+x.Id;
+                y.RecordType=x.RecordType.Name;
+                return y;
+            });
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+            this.options = undefined;
+        }
+    }
+
+/*     @wire(getPeople)
+    people; */
 
     handleRowAction(event) {
         const actionName = event.detail.action.name;

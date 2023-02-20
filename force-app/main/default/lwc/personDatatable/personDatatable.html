@@ -9,19 +9,19 @@
         </lightning-button>
     </div>
     <div class="slds-var-m-around_medium">
-        <template lwc:if={people.data}>
+        <template lwc:if={people}>
             <lightning-datatable
                 key-field="Id"
-                data={people.data}
+                data={people}
                 columns={columns}
                 onrowaction={handleRowAction}
                 hide-checkbox-column
             >
             </lightning-datatable>
         </template>
-        <template lwc:elseif={people.error}>
+        <template lwc:elseif={error}>
             <div class="slds-text-color_error">
-                An error occurred while loading all people
+                {error.body}
             </div>
         </template>
     </div>
