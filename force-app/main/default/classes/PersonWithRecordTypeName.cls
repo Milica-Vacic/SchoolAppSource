@@ -9,7 +9,7 @@ public with sharing class PersonWithRecordTypeName {
     public PersonWithRecordTypeName(Person__c p) {
         this.Id=p.Id;
         this.Name=p.Name;
-        if (Schema.sObjectType.Person__c.fields.Phone__c.isAccessible()) {
+        if (p.getPopulatedFieldsAsMap().containsKey('Phone__c')) {
             this.Phone=p.Phone__c;
         }
         this.Email=p.Email__c;
