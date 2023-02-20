@@ -66,10 +66,7 @@ export default class PersonDatatable extends LightningElement {
             this.options = undefined;
         }
     }
-
-/*     @wire(getPeople)
-    people; */
-
+    
     handleRowAction(event) {
         const actionName = event.detail.action.name;
         const row = event.detail.row;
