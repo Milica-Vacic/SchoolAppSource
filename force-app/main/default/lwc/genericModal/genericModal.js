@@ -1,16 +1,15 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 export default class GenericModal extends LightningElement {
-    @api isShowModal=false;
+    @track isShowModal=false;
     @api title;
 
-    hideModalBox(event){
+    @api hideModalBox(){
         this.isShowModal=false;
     }
-
-    bubbleEvent(event){
-        this.dispatchEvent(new CustomEvent(event.type, {
-            detail: event.detail
-          }));
+    @api showModalBox(){
+        this.isShowModal=true;
     }
+    
+
 }

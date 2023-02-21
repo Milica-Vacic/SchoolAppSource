@@ -42,8 +42,6 @@ const columns = [
 export default class PersonDatatable extends LightningElement {
     columns = columns;
     record = {};
-    isVisibleTypeModal=false;
-    isVisibleCreateModal=false;
     selectedRecordType;
     people;
     error;
@@ -81,13 +79,13 @@ export default class PersonDatatable extends LightningElement {
         }
     }
 
-    handleCreatePerson(event){
-        this.isVisibleTypeModal=true;
+    openRecordTypeModal(event){
+        this.template.querySelector('.RecordTypeModal').showModalBox();
     }
 
     handleRecordTypeSelection(event){
-        this.isVisibleTypeModal=false;
-        this.isVisibleCreateModal=true;
+        this.template.querySelector('.RecordTypeModal').hideModalBox();
+        this.template.querySelector('.CreatePersonModal').showModalBox();
     }
 
     handleSelectChange(event){

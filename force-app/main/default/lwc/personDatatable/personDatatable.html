@@ -1,21 +1,20 @@
 <template>
-
     <lightning-card
     title="All People">
     <div class="slds-m-around--medium">
         <lightning-button
                 label="Create Person"
-                onclick={handleCreatePerson}>
+                onclick={openRecordTypeModal}>
         </lightning-button>
     </div>
-    <div class="slds-m-around--medium" onselectchange={handleSelectChange}>
-        <c-generic-modal is-show-modal={isVisibleTypeModal} title="Record Type Selection" onselectchange={bubbleEvent}>
-            <c-select-person-record-type slot="modalBody"></c-select-person-record-type>
+    <div class="slds-m-around--medium">
+        <c-generic-modal title="Record Type Selection" class="RecordTypeModal" >
+            <c-select-person-record-type onselectchange={handleSelectChange} slot="modalBody"></c-select-person-record-type>
             <button slot="modalFooter" class="slds-button slds-button_neutral" onclick={handleRecordTypeSelection}>Confirm</button>
         </c-generic-modal>
     </div>
     <div class="slds-m-around--medium">
-        <c-generic-modal title="Record Type Selection" is-show-modal={isVisibleCreateModal}>
+        <c-generic-modal title="Create Person" class="CreatePersonModal">
             <c-person-create-screen slot="modalBody" record-type-id={selectedRecordType}></c-person-create-screen>
         </c-generic-modal>
     </div>
