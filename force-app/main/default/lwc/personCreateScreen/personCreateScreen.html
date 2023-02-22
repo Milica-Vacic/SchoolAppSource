@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Create Person" icon-name="standard:record">
+        <lightning-record-form
+        object-api-name={objectName}
+        record-type-id={recordTypeId}
+        layout-type="Full"
+        onsuccess={handleSuccess}
+        onsubmit={handleSubmit}>
+
+        </lightning-record-form>
+    </lightning-card>
+</template>

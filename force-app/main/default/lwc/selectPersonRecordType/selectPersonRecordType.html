@@ -1,0 +1,16 @@
+<template>
+    <lightning-combobox lwc:if={options}
+            name="recordType"
+            label="Record Type"
+            value={value}
+            placeholder="Select record type"
+            options={options}
+            onchange={handleChange} >
+    </lightning-combobox>
+    <template lwc:elseif={error}>
+        <div class="slds-text-color_error">
+            An error occurred while loading record types
+        </div>
+    </template>
+    
+</template>

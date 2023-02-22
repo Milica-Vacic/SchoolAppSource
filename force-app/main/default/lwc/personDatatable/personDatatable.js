@@ -1,6 +1,9 @@
 
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire} from 'lwc';
 import getPeople from '@salesforce/apex/PersonController.getPersonList';
+import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import PHONE_FIELD from '@salesforce/schema/Person__c.Phone__c';
 import EMAIL_FIELD from '@salesforce/schema/Person__c.Email__c';
@@ -41,12 +44,16 @@ const columns = [
 
 export default class PersonDatatable extends LightningElement {
     columns = columns;
-    record = {};
+    selectedRecordType;
     people;
+    wiredPeopleParams;
     error;
+    row={};
 
     @wire(getPeople)
-    wiredPeople({ error, data }) {
+    wiredPeople(value) {
+        this.wiredPeopleParams=value;
+        const { data, error } = value;
         if (data) {
             this.people = data.map(x=>{
                 let y={};
@@ -63,31 +70,67 @@ export default class PersonDatatable extends LightningElement {
             this.options = undefined;
         }
     }
-
-/*     @wire(getPeople)
-    people; */
-
+    
     handleRowAction(event) {
         const actionName = event.detail.action.name;
-        const row = event.detail.row;
+        this.row = event.detail.row;
         switch (actionName) {
             case 'delete':
-                this.deleteRow(row);
+                this.template.querySelector('.DeletePersonModal').showModalBox();
                 break;
             case 'edit':
-                this.editRow(row);
+                this.editRow(this.row);
                 break;
             default:
         }
     }
 
-    deleteRow(row) {
-        //TO BE ADDED
+    openRecordTypeModal(event){
+        this.template.querySelector('.RecordTypeModal').showModalBox();
     }
 
+    handleRecordTypeSelection(event){
+        this.template.querySelector('.RecordTypeModal').hideModalBox();
+        this.template.querySelector('.CreatePersonModal').showModalBox();
+    }
+
+    handleSelectChange(event){
+        this.selectedRecordType=event.detail
+    }
+    refreshData(){
+        return refreshApex(this.wiredPeopleParams);
+    }
+
+    deleteRow() {
+        this.template.querySelector('.DeletePersonModal').hideModalBox();
+        const id = this.row.Id;
+        deleteRecord(id)
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Record deleted',
+                        variant: 'success'
+                    })
+
+                );
+                this.refreshData();
+            })
+            .catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error deleting record',
+                        message: error.body.message,
+                        variant: 'error'
+                    })
+                );
+            });
+    }
 
     editRow(row) {
         //TO BE ADDED
     }
+
+
 
 }
