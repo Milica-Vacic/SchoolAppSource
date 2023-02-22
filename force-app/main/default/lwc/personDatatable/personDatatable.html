@@ -18,6 +18,12 @@
             <c-person-create-screen slot="modalBody" record-type-id={selectedRecordType}></c-person-create-screen>
         </c-generic-modal>
     </div>
+    <div class="slds-m-around--medium">
+        <c-generic-modal title="Confirm Deletion" class="DeletePersonModal">
+            <p slot="modalBody">Are you certain you want to delete person {row.Name}?</p>
+            <button slot="modalFooter" class="slds-button slds-button_neutral" onclick={deleteRow}>Confirm</button>
+        </c-generic-modal>
+    </div>
 
     <div class="slds-var-m-around_medium">
         <template lwc:if={people}>

@@ -48,6 +48,7 @@ export default class PersonDatatable extends LightningElement {
     people;
     wiredPeopleParams;
     error;
+    row={};
 
     @wire(getPeople)
     wiredPeople(value) {
@@ -72,13 +73,13 @@ export default class PersonDatatable extends LightningElement {
     
     handleRowAction(event) {
         const actionName = event.detail.action.name;
-        const row = event.detail.row;
+        this.row = event.detail.row;
         switch (actionName) {
             case 'delete':
-                this.deleteRow(row);
+                this.template.querySelector('.DeletePersonModal').showModalBox();
                 break;
             case 'edit':
-                this.editRow(row);
+                this.editRow(this.row);
                 break;
             default:
         }
@@ -97,8 +98,9 @@ export default class PersonDatatable extends LightningElement {
         this.selectedRecordType=event.detail
     }
 
-    deleteRow(row) {
-        const id = row.Id;
+    deleteRow() {
+        this.template.querySelector('.DeletePersonModal').hideModalBox();
+        const id = this.row.Id;
         deleteRecord(id)
             .then(() => {
                 this.dispatchEvent(
