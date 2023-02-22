@@ -34,14 +34,4 @@ export default class PersonCreateScreen extends NavigationMixin(LightningElement
             }
         });
     }
-
-    handleError(event){
-        const evt = new ShowToastEvent({
-            title: 'Error!',
-            message: `Encountered error while creating persson ${this.name}.
-            Error: ${event.detail.message}`,
-            variant: 'error',
-        });
-        this.dispatchEvent(evt);
-    }
 }
