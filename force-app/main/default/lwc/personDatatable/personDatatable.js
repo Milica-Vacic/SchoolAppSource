@@ -1,6 +1,9 @@
 
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire} from 'lwc';
 import getPeople from '@salesforce/apex/PersonController.getPersonList';
+import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import PHONE_FIELD from '@salesforce/schema/Person__c.Phone__c';
 import EMAIL_FIELD from '@salesforce/schema/Person__c.Email__c';
@@ -41,13 +44,15 @@ const columns = [
 
 export default class PersonDatatable extends LightningElement {
     columns = columns;
-    record = {};
     selectedRecordType;
     people;
+    wiredPeopleParams;
     error;
 
     @wire(getPeople)
-    wiredPeople({ error, data }) {
+    wiredPeople(value) {
+        this.wiredPeopleParams=value;
+        const { data, error } = value;
         if (data) {
             this.people = data.map(x=>{
                 let y={};
@@ -93,9 +98,29 @@ export default class PersonDatatable extends LightningElement {
     }
 
     deleteRow(row) {
-        //TO BE ADDED
-    }
+        const id = row.Id;
+        deleteRecord(id)
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Record deleted',
+                        variant: 'success'
+                    })
 
+                );
+                return refreshApex(this.wiredPeopleParams);
+            })
+            .catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error deleting record',
+                        message: error.body.message,
+                        variant: 'error'
+                    })
+                );
+            });
+    }
 
     editRow(row) {
         //TO BE ADDED
