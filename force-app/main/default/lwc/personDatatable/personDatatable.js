@@ -83,6 +83,7 @@ export default class PersonDatatable extends LightningElement {
     }
     
     handleRowAction(event) {
+        this.searchKey='';
         const actionName = event.detail.action.name;
         this.row = event.detail.row;
         switch (actionName) {
