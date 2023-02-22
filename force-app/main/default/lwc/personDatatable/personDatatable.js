@@ -97,6 +97,9 @@ export default class PersonDatatable extends LightningElement {
     handleSelectChange(event){
         this.selectedRecordType=event.detail
     }
+    refreshData(){
+        return refreshApex(this.wiredPeopleParams);
+    }
 
     deleteRow() {
         this.template.querySelector('.DeletePersonModal').hideModalBox();
@@ -111,7 +114,7 @@ export default class PersonDatatable extends LightningElement {
                     })
 
                 );
-                return refreshApex(this.wiredPeopleParams);
+                this.refreshData();
             })
             .catch(error => {
                 this.dispatchEvent(

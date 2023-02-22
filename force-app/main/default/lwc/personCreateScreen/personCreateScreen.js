@@ -18,6 +18,8 @@ export default class PersonCreateScreen extends NavigationMixin(LightningElement
         this.template.querySelector('lightning-record-form').submit(fields);
     }
     handleSuccess(event){
+        this.dispatchEvent(new CustomEvent('dataedit'));
+
         const evt = new ShowToastEvent({
             title: 'Success!',
             message: `Person ${this.name} successfully created`,

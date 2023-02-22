@@ -14,8 +14,8 @@
         </c-generic-modal>
     </div>
     <div class="slds-m-around--medium">
-        <c-generic-modal title="Create Person" class="CreatePersonModal">
-            <c-person-create-screen slot="modalBody" record-type-id={selectedRecordType}></c-person-create-screen>
+        <c-generic-modal title="Create Person" class="CreatePersonModal" >
+            <c-person-create-screen slot="modalBody" record-type-id={selectedRecordType} ondataedit={refreshData}></c-person-create-screen>
         </c-generic-modal>
     </div>
     <div class="slds-m-around--medium">
