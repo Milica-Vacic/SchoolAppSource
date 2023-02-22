@@ -9,7 +9,7 @@ public with sharing class PersonControllerTest {
         insert people;
 
         Test.startTest();
-        Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList());
+        Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList(''));
         Test.stopTest();
 
         System.assertEquals(5, returnedPeople.size(),'Incorrect number of Person__c records returned');
@@ -39,7 +39,7 @@ public with sharing class PersonControllerTest {
             List<Person__c> ownedPeople=TestDataFactory.createPeople('ownedTutor', 1, 'Tutor');
             insert ownedPeople;
             Test.startTest();
-            List<Person__c> returnedPeople = PersonController.getPersonList();
+            List<Person__c> returnedPeople = PersonController.getPersonList('');
             System.assertEquals(1, returnedPeople.size(),'Incorrect number of Person__c records returned');
             System.assertEquals(ownedPeople[0].Id, returnedPeople[0].Id,'Incorrect Person__c record returned');
             Test.stopTest();
@@ -63,7 +63,7 @@ public with sharing class PersonControllerTest {
 
         System.runAs(user) {   
             Test.startTest();
-            Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList());
+            Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList(''));
             System.assertEquals(1, returnedPeople.size(),'Incorrect number of Person__c records returned');
             
             for(Person__c p:people){

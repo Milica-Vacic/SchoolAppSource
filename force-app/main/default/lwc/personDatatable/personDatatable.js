@@ -42,6 +42,8 @@ const columns = [
     }
 ];
 
+const DELAY = 300;
+
 export default class PersonDatatable extends LightningElement {
     columns = columns;
     selectedRecordType;
@@ -49,8 +51,9 @@ export default class PersonDatatable extends LightningElement {
     wiredPeopleParams;
     error;
     row={};
+    searchKey='';
 
-    @wire(getPeople)
+    @wire(getPeople, { searchKey: '$searchKey' })
     wiredPeople(value) {
         this.wiredPeopleParams=value;
         const { data, error } = value;
@@ -69,6 +72,14 @@ export default class PersonDatatable extends LightningElement {
             this.error = error;
             this.options = undefined;
         }
+    }
+
+    handleKeyChange(event) {
+        window.clearTimeout(this.delayTimeout);
+        const searchKey = event.target.value;
+        this.delayTimeout = setTimeout(() => {
+            this.searchKey = searchKey;
+        }, DELAY);
     }
     
     handleRowAction(event) {
