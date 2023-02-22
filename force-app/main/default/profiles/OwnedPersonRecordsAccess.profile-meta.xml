@@ -145,6 +145,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Person__c.Passing_Credit_Threshold__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Person__c.Passing_Score_Threshold__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Person__c.Phone__c</field>
         <readable>false</readable>
@@ -273,7 +283,7 @@
         <recordType>Person__c.Student</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Person__c-Person Layout</layout>
+        <layout>Person__c-Tutor_Layout</layout>
         <recordType>Person__c.Tutor</recordType>
     </layoutAssignments>
     <layoutAssignments>

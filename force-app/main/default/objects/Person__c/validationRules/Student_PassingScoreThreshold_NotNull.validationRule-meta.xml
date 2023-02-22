@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Student_PassingScoreThreshold_NotNull</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( RecordType.Name = &apos;Student&apos;, 
+ISNULL( Passing_Score_Threshold__c ) )</errorConditionFormula>
+    <errorDisplayField>Passing_Score_Threshold__c</errorDisplayField>
+    <errorMessage>Student must have value for Passing Score Threshold</errorMessage>
+</ValidationRule>
