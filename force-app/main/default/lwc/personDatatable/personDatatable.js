@@ -1,6 +1,7 @@
 
 import { LightningElement, wire } from 'lwc';
 import getPeople from '@salesforce/apex/PersonController.getPersonList';
+import { refreshApex } from '@salesforce/apex';
 import NAME_FIELD from '@salesforce/schema/Person__c.Name';
 import PHONE_FIELD from '@salesforce/schema/Person__c.Phone__c';
 import EMAIL_FIELD from '@salesforce/schema/Person__c.Email__c';
@@ -41,13 +42,15 @@ const columns = [
 
 export default class PersonDatatable extends LightningElement {
     columns = columns;
-    record = {};
     selectedRecordType;
     people;
     error;
+    wiredPeopleParams;
 
     @wire(getPeople)
-    wiredPeople({ error, data }) {
+    wiredPeople(value) {
+        this.wiredPeopleParams=value;
+        const {error, data} = value;
         if (data) {
             this.people = data.map(x=>{
                 let y={};
@@ -90,6 +93,9 @@ export default class PersonDatatable extends LightningElement {
 
     handleSelectChange(event){
         this.selectedRecordType=event.detail
+    }
+    refreshData(){
+        return refreshApex(this.wiredPeopleParams);
     }
 
     deleteRow(row) {
