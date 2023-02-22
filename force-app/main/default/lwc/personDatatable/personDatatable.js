@@ -79,7 +79,7 @@ export default class PersonDatatable extends LightningElement {
                 this.template.querySelector('.DeletePersonModal').showModalBox();
                 break;
             case 'edit':
-                this.editRow(this.row);
+                this.template.querySelector('.EditPersonModal').showModalBox();
                 break;
             default:
         }
@@ -126,11 +126,5 @@ export default class PersonDatatable extends LightningElement {
                 );
             });
     }
-
-    editRow(row) {
-        //TO BE ADDED
-    }
-
-
 
 }

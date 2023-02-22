@@ -24,6 +24,11 @@
             <button slot="modalFooter" class="slds-button slds-button_neutral" onclick={deleteRow}>Confirm</button>
         </c-generic-modal>
     </div>
+    <div class="slds-m-around--medium">
+        <c-generic-modal title="Edit Person" class="EditPersonModal">
+            <c-person-edit-screen slot="modalBody" record-id={row.Id} ondataedit={refreshData}></c-person-edit-screen>
+        </c-generic-modal>
+    </div>
 
     <div class="slds-var-m-around_medium">
         <template lwc:if={people}>
