@@ -42,6 +42,8 @@ const columns = [
     }
 ];
 
+const DELAY = 300;
+
 export default class PersonDatatable extends LightningElement {
     columns = columns;
     selectedRecordType;
@@ -49,8 +51,9 @@ export default class PersonDatatable extends LightningElement {
     wiredPeopleParams;
     error;
     row={};
+    searchKey='';
 
-    @wire(getPeople)
+    @wire(getPeople, { searchKey: '$searchKey' })
     wiredPeople(value) {
         this.wiredPeopleParams=value;
         const { data, error } = value;
@@ -70,8 +73,17 @@ export default class PersonDatatable extends LightningElement {
             this.options = undefined;
         }
     }
+
+    handleKeyChange(event) {
+        window.clearTimeout(this.delayTimeout);
+        const searchKey = event.target.value;
+        this.delayTimeout = setTimeout(() => {
+            this.searchKey = searchKey;
+        }, DELAY);
+    }
     
     handleRowAction(event) {
+        this.searchKey='';
         const actionName = event.detail.action.name;
         this.row = event.detail.row;
         switch (actionName) {
@@ -79,7 +91,7 @@ export default class PersonDatatable extends LightningElement {
                 this.template.querySelector('.DeletePersonModal').showModalBox();
                 break;
             case 'edit':
-                this.editRow(this.row);
+                this.template.querySelector('.EditPersonModal').showModalBox();
                 break;
             default:
         }
@@ -90,6 +102,7 @@ export default class PersonDatatable extends LightningElement {
     }
 
     handleRecordTypeSelection(event){
+        this.searchKey='';
         this.template.querySelector('.RecordTypeModal').hideModalBox();
         this.template.querySelector('.CreatePersonModal').showModalBox();
     }
@@ -126,11 +139,5 @@ export default class PersonDatatable extends LightningElement {
                 );
             });
     }
-
-    editRow(row) {
-        //TO BE ADDED
-    }
-
-
 
 }

@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Edit Person" icon-name="standard:record">
+        <lightning-record-form
+        object-api-name={objectName}
+        record-id={recordId}
+        layout-type="Full"
+        mode="edit"
+        onsuccess={handleSuccess}
+        onsubmit={handleSubmit}>
+        </lightning-record-form>
+    </lightning-card>
+</template>

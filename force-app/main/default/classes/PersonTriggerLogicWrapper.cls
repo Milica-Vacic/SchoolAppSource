@@ -37,8 +37,8 @@ public with sharing class PersonTriggerLogicWrapper {
     public void concatFullName(List<Person__c> newRecs, Map<Id,Person__c> oldRecs){
         if (skipFullNameConcat) return;
         for (Person__c newRec:newRecs){
-            if ((oldRecs!=null &&(newRec.First_Name__c!=oldRecs?.get(newRec.Id).First_Name__c || newRec.Last_Name__c!=oldRecs?.get(newRec.Id).Last_Name__c)) || oldRecs==null){
-                String fullNAme=String.format('{0} {1}', new List<String>{newRec.First_Name__c, newRec.Last_Name__c});
+            String fullNAme=String.format('{0} {1}', new List<String>{newRec.First_Name__c, newRec.Last_Name__c});
+            if (newRec.Name!=fullNAme){
                 newRec.Name=fullNAme;
                 if (Test.isRunningTest()) hasConcatedCount+=1;
             }

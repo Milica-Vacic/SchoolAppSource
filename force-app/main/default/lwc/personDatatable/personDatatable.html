@@ -3,9 +3,16 @@
     title="All People">
     <div class="slds-m-around--medium">
         <lightning-button
-                label="Create Person"
-                onclick={openRecordTypeModal}>
+            label="Create Person"
+            onclick={openRecordTypeModal}>
         </lightning-button>
+        <lightning-input
+            type="search"
+            onchange={handleKeyChange}
+            class="slds-var-m-bottom_small slds-size_1-of-3"
+            label="Search"
+            value={searchKey}>
+        </lightning-input>
     </div>
     <div class="slds-m-around--medium">
         <c-generic-modal title="Record Type Selection" class="RecordTypeModal" >
@@ -22,6 +29,11 @@
         <c-generic-modal title="Confirm Deletion" class="DeletePersonModal">
             <p slot="modalBody">Are you certain you want to delete person {row.Name}?</p>
             <button slot="modalFooter" class="slds-button slds-button_neutral" onclick={deleteRow}>Confirm</button>
+        </c-generic-modal>
+    </div>
+    <div class="slds-m-around--medium">
+        <c-generic-modal title="Edit Person" class="EditPersonModal">
+            <c-person-edit-screen slot="modalBody" record-id={row.Id} ondataedit={refreshData}></c-person-edit-screen>
         </c-generic-modal>
     </div>
 
