@@ -58,6 +58,7 @@ export default class PersonDatatable extends LightningElement {
     searchKey='';
     @track sortBy;
     @track sortDirection;
+    sortFieldName;
 
     @wire(getPeople, { searchKey: '$searchKey' })
     wiredPeople(value) {
@@ -73,6 +74,7 @@ export default class PersonDatatable extends LightningElement {
                 y.RecordType=x.RecordType.Name;
                 return y;
             });
+            if (this.sortBy) this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
             this.error = undefined;
         } else if (error) {
             this.error = error;
@@ -153,8 +155,8 @@ export default class PersonDatatable extends LightningElement {
     doSorting(event) {
         this.sortBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        let sortFieldName=this.sortBy=='NameUrl'?NAME_FIELD.fieldApiName:event.detail.fieldName;
-        this.sortData(sortFieldName, this.sortDirection, this.nullToEmpty);
+        this.sortFieldName=this.sortBy=='NameUrl'?NAME_FIELD.fieldApiName:event.detail.fieldName;
+        this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
     }
 
     sortData(fieldname, direction, valuePrep) {
