@@ -102,6 +102,7 @@ export default class PersonDatatable extends LightningElement {
     }
 
     handleRecordTypeSelection(event){
+        this.searchKey='';
         this.template.querySelector('.RecordTypeModal').hideModalBox();
         this.template.querySelector('.CreatePersonModal').showModalBox();
     }
