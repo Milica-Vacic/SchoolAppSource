@@ -9,7 +9,7 @@ public with sharing class PersonControllerTest {
         insert people;
 
         Test.startTest();
-        Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList());
+        Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList(''));
         Test.stopTest();
 
         System.assertEquals(5, returnedPeople.size(),'Incorrect number of Person__c records returned');
@@ -39,7 +39,7 @@ public with sharing class PersonControllerTest {
             List<Person__c> ownedPeople=TestDataFactory.createPeople('ownedTutor', 1, 'Tutor');
             insert ownedPeople;
             Test.startTest();
-            List<Person__c> returnedPeople = PersonController.getPersonList();
+            List<Person__c> returnedPeople = PersonController.getPersonList('');
             System.assertEquals(1, returnedPeople.size(),'Incorrect number of Person__c records returned');
             System.assertEquals(ownedPeople[0].Id, returnedPeople[0].Id,'Incorrect Person__c record returned');
             Test.stopTest();
@@ -63,7 +63,7 @@ public with sharing class PersonControllerTest {
 
         System.runAs(user) {   
             Test.startTest();
-            Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList());
+            Map<Id,Person__c> returnedPeople = new Map<Id,Person__c>(PersonController.getPersonList(''));
             System.assertEquals(1, returnedPeople.size(),'Incorrect number of Person__c records returned');
             
             for(Person__c p:people){
@@ -80,6 +80,38 @@ public with sharing class PersonControllerTest {
 
             Test.stopTest();
         }
+    }
+
+    @isTest
+    static void getPersonList_nonEmptySearchKey_ReturnsMatchingRecords() {
+        List<Person__c> people=TestDataFactory.createPeople('first', 2, 'Tutor');
+        people.addAll(TestDataFactory.createPeople('second', 2, 'Student'));
+        people[3].Phone__c='0604009911';
+        people[1].Email__c='testEmail@gmail.com';
+        PersonTriggerLogicWrapper.skipPhoneValidation=true;
+        insert people;
+
+        Test.startTest();
+        Map<Id,Person__c> matchingNameReturn = new Map<Id,Person__c>(PersonController.getPersonList('first'));
+        Map<Id,Person__c> matchingPhoneReturn = new Map<Id,Person__c>(PersonController.getPersonList('04009'));
+        Map<Id,Person__c> matchingEmailReturn = new Map<Id,Person__c>(PersonController.getPersonList('testEmail'));
+        Map<Id,Person__c> matchingMixedReturn = new Map<Id,Person__c>(PersonController.getPersonList('0'));     
+        Test.stopTest();
+
+        System.assertEquals(2, matchingNameReturn.size(),'Incorrect number of Person__c records returned for search key \'first\'');
+        System.assert(matchingNameReturn.keySet().contains(people[0].Id) && matchingNameReturn.keySet().contains(people[1].Id),'Incorrect  records returned for search key \'first\'');
+        
+        System.assertEquals(1, matchingPhoneReturn.size(),'Incorrect number of Person__c records returned for search key \'04009\'');
+        System.assert(matchingPhoneReturn.keySet().contains(people[3].Id),'Incorrect  records returned for search key \'04009\'');
+
+        System.assertEquals(1, matchingEmailReturn.size(),'Incorrect number of Person__c records returned for search key \'testEmail\'');
+        System.assert(matchingEmailReturn.keySet().contains(people[1].Id),'Incorrect  records returned for search key \'testEmail\'');
+
+        System.assertEquals(3, matchingMixedReturn.size(),'Incorrect number of Person__c records returned for search key \'0\'');
+        System.assert(!matchingMixedReturn.keySet().contains(people[1].Id),'Incorrect  records returned for search key \'0\'');
+        
+        
+
     }
 
  

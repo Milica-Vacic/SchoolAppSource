@@ -3,9 +3,16 @@
     title="All People">
     <div class="slds-m-around--medium">
         <lightning-button
-                label="Create Person"
-                onclick={openRecordTypeModal}>
+            label="Create Person"
+            onclick={openRecordTypeModal}>
         </lightning-button>
+        <lightning-input
+            type="search"
+            onchange={handleKeyChange}
+            class="slds-var-m-bottom_small slds-size_1-of-3"
+            label="Search"
+            value={searchKey}>
+        </lightning-input>
     </div>
     <div class="slds-m-around--medium">
         <c-generic-modal title="Record Type Selection" class="RecordTypeModal" >
