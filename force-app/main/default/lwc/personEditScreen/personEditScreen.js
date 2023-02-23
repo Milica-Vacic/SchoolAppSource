@@ -3,7 +3,7 @@ import OBJECT_NAME from '@salesforce/schema/Person__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class PersonEditScreen extends LightningElement {
+export default class PersonEditScreen extends NavigationMixin(LightningElement) {
     @api recordId;
     objectName=OBJECT_NAME;
     name;
