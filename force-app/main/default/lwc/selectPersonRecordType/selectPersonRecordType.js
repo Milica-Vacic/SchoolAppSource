@@ -6,6 +6,7 @@ export default class SelectPersonRecordType extends LightningElement {
     options;
     error;
 
+    //TODO get Record Types from https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.data_considerations instead of APEX
     @wire(getRecordTypes)
     wiredRecordTypes({ error, data }) {
         if (data) {

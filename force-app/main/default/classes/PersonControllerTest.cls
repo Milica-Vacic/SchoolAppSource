@@ -67,11 +67,10 @@ public with sharing class PersonControllerTest {
             System.assertEquals(1, returnedPeople.size(),'Incorrect number of Person__c records returned');
             
             for(Person__c p:people){
-                try{
+                try {
                     String phone=returnedPeople.get(p.Id).Phone__c;
                     System.Assert(false,'Exception should have been thrown, Phone__c should not have been returned');
-                }
-                catch(SObjectException e){}
+                } catch(SObjectException e){}
                 String name=String.format('{0} {1}', new List<String>{p.First_Name__c, p.Last_Name__c});
                 System.assertEquals(name, returnedPeople.get(p.Id).Name, 'Name does not match expected value');
                 System.assertEquals(p.Email__c, returnedPeople.get(p.Id).Email__c, 'Email does not match expected value');
@@ -93,25 +92,21 @@ public with sharing class PersonControllerTest {
 
         Test.startTest();
         Map<Id,Person__c> matchingNameReturn = new Map<Id,Person__c>(PersonController.getPersonList('first'));
-        Map<Id,Person__c> matchingPhoneReturn = new Map<Id,Person__c>(PersonController.getPersonList('04009'));
-        Map<Id,Person__c> matchingEmailReturn = new Map<Id,Person__c>(PersonController.getPersonList('testEmail'));
-        Map<Id,Person__c> matchingMixedReturn = new Map<Id,Person__c>(PersonController.getPersonList('0'));     
-        Test.stopTest();
-
         System.assertEquals(2, matchingNameReturn.size(),'Incorrect number of Person__c records returned for search key \'first\'');
         System.assert(matchingNameReturn.keySet().contains(people[0].Id) && matchingNameReturn.keySet().contains(people[1].Id),'Incorrect  records returned for search key \'first\'');
-        
+
+        Map<Id,Person__c> matchingPhoneReturn = new Map<Id,Person__c>(PersonController.getPersonList('04009'));
         System.assertEquals(1, matchingPhoneReturn.size(),'Incorrect number of Person__c records returned for search key \'04009\'');
         System.assert(matchingPhoneReturn.keySet().contains(people[3].Id),'Incorrect  records returned for search key \'04009\'');
 
+        Map<Id,Person__c> matchingEmailReturn = new Map<Id,Person__c>(PersonController.getPersonList('testEmail'));
         System.assertEquals(1, matchingEmailReturn.size(),'Incorrect number of Person__c records returned for search key \'testEmail\'');
         System.assert(matchingEmailReturn.keySet().contains(people[1].Id),'Incorrect  records returned for search key \'testEmail\'');
 
+        Map<Id,Person__c> matchingMixedReturn = new Map<Id,Person__c>(PersonController.getPersonList('0'));
         System.assertEquals(3, matchingMixedReturn.size(),'Incorrect number of Person__c records returned for search key \'0\'');
         System.assert(!matchingMixedReturn.keySet().contains(people[1].Id),'Incorrect  records returned for search key \'0\'');
-        
-        
-
+        Test.stopTest();
     }
 
  

@@ -18,7 +18,7 @@ const columns = [
         label: 'Name',
             fieldName: 'NameUrl',
             type: 'url',
-            typeAttributes: {label: { fieldName: NAME_FIELD.fieldApiName }, 
+            typeAttributes: {label: { fieldName: NAME_FIELD.fieldApiName },
             target: '_blank'},
             sortable: true
     },
@@ -64,6 +64,7 @@ export default class PersonDatatable extends LightningElement {
     @track sortDirection;
     sortFieldName;
 
+    //TODO Research when do we need to use track and do we need it this this project.
     @wire(getPeople, { searchKey: '$searchKey' })
     wiredPeople(value) {
         this.wiredPeopleParams=value;
@@ -97,7 +98,7 @@ export default class PersonDatatable extends LightningElement {
             this.searchKey = searchKey;
         }, DELAY);
     }
-    
+
     handleRowAction(event) {
         this.searchKey='';
         const actionName = event.detail.action.name;
@@ -157,7 +158,7 @@ export default class PersonDatatable extends LightningElement {
     }
 
     nullToEmpty(val){
-        return val?val:'';
+        return val ? val : '';
     }
 
     doSorting(event) {
@@ -183,16 +184,16 @@ export default class PersonDatatable extends LightningElement {
         this.people = clonePeople;
         this.loadedPeople = this.people.slice(0, this.loadedCount);
     }
-    
+
 
     handleLoadMore(event) {
         this.loadedCount = this.loadedPeople.length + this.tableLoadStep;
         if (this.loadedCount >= this.people.length) this.moreToLoad = false;
-        this.loadedCount = (this.loadedCount > this.people.length) ? this.people.length : this.loadedCount; 
+        this.loadedCount = (this.loadedCount > this.people.length) ? this.people.length : this.loadedCount;
         event.target.isLoading = true;
         this.loadedPeople = this.people.slice(0, this.loadedCount);
         event.target.isLoading = false;
-        
+
     }
 
 }
