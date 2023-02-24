@@ -52,6 +52,10 @@ export default class PersonDatatable extends LightningElement {
     columns = columns;
     selectedRecordType;
     people;
+    loadedPeople;
+    loadedCount;
+    tableLoadStep=10;
+    @track moreToLoad=true;
     wiredPeopleParams;
     error;
     row={};
@@ -75,10 +79,14 @@ export default class PersonDatatable extends LightningElement {
                 return y;
             });
             if (this.sortBy) this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
+
+            this.loadedPeople = this.people.slice(0, this.tableLoadStep);
+            this.loadedCount=this.tableLoadStep;
+            if (this.loadedCount<this.people.length) this.moreToLoad=true;
             this.error = undefined;
         } else if (error) {
             this.error = error;
-            this.options = undefined;
+            this.people = undefined;
         }
     }
 
@@ -173,6 +181,18 @@ export default class PersonDatatable extends LightningElement {
             return isReverse * ((x > y) - (y > x));
         });
         this.people = clonePeople;
-    }    
+        this.loadedPeople = this.people.slice(0, this.loadedCount);
+    }
+    
+
+    handleLoadMore(event) {
+        this.loadedCount = this.loadedPeople.length + this.tableLoadStep;
+        if (this.loadedCount >= this.people.length) this.moreToLoad = false;
+        this.loadedCount = (this.loadedCount > this.people.length) ? this.people.length : this.loadedCount; 
+        event.target.isLoading = true;
+        this.loadedPeople = this.people.slice(0, this.loadedCount);
+        event.target.isLoading = false;
+        
+    }
 
 }

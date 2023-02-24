@@ -37,17 +37,21 @@
         </c-generic-modal>
     </div>
 
-    <div class="slds-var-m-around_medium">
-        <template lwc:if={people}>
+    <div style="height: 300px" class="slds-var-m-around_medium">
+        <template lwc:if={loadedPeople}>
             <lightning-datatable
                 key-field="Id"
-                data={people}
+                data={loadedPeople}
                 columns={columns}
                 onrowaction={handleRowAction}
                 hide-checkbox-column
                 sorted-by={sortBy}
                 sorted-direction={sortDirection}
                 onsort={doSorting}
+                onloadmore={handleLoadMore}
+                enable-infinite-loading={moreToLoad}
+                show-row-number-column
+                load-more-offset="5"
             >
             </lightning-datatable>
         </template>
