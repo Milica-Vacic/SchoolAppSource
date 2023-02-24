@@ -1,5 +1,5 @@
 
-import { LightningElement, wire} from 'lwc';
+import { LightningElement, wire, track} from 'lwc';
 import getPeople from '@salesforce/apex/PersonController.getPersonList';
 import { deleteRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -19,26 +19,30 @@ const columns = [
             fieldName: 'NameUrl',
             type: 'url',
             typeAttributes: {label: { fieldName: NAME_FIELD.fieldApiName }, 
-            target: '_blank'}
+            target: '_blank'},
+            sortable: true
     },
     {
         label: 'Email',
         fieldName: EMAIL_FIELD.fieldApiName,
         type: 'email',
+        sortable: true
     },
     {
         label: 'Phone',
         fieldName: PHONE_FIELD.fieldApiName,
         type: 'phone',
+        sortable: true
     },
     {
         label: 'Record Type',
         fieldName: 'RecordType',
         type: 'Text',
+        sortable: true
     },
     {
         type: 'action',
-        typeAttributes: { rowActions: actions },
+        typeAttributes: { rowActions: actions }
     }
 ];
 
@@ -52,6 +56,9 @@ export default class PersonDatatable extends LightningElement {
     error;
     row={};
     searchKey='';
+    @track sortBy;
+    @track sortDirection;
+    sortFieldName;
 
     @wire(getPeople, { searchKey: '$searchKey' })
     wiredPeople(value) {
@@ -67,6 +74,7 @@ export default class PersonDatatable extends LightningElement {
                 y.RecordType=x.RecordType.Name;
                 return y;
             });
+            if (this.sortBy) this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
             this.error = undefined;
         } else if (error) {
             this.error = error;
@@ -139,5 +147,32 @@ export default class PersonDatatable extends LightningElement {
                 );
             });
     }
+
+    nullToEmpty(val){
+        return val?val:'';
+    }
+
+    doSorting(event) {
+        this.sortBy = event.detail.fieldName;
+        this.sortDirection = event.detail.sortDirection;
+        this.sortFieldName=this.sortBy=='NameUrl'?NAME_FIELD.fieldApiName:event.detail.fieldName;
+        this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
+    }
+
+    sortData(fieldname, direction, valuePrep) {
+        const clonePeople = [...this.people];
+        let keyValue = (a) => {
+            if (valuePrep) return valuePrep(a[fieldname]);
+            return a[fieldname]
+        };
+        let isReverse = direction === 'asc' ? 1: -1;
+
+        clonePeople.sort((x, y) => {
+            x = keyValue(x);
+            y = keyValue(y);
+            return isReverse * ((x > y) - (y > x));
+        });
+        this.people = clonePeople;
+    }    
 
 }
