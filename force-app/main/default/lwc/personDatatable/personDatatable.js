@@ -52,10 +52,9 @@ export default class PersonDatatable extends LightningElement {
     columns = columns;
     selectedRecordType;
     people;
-    loadedPeople=[];
+    loadedPeople;
     loadedCount;
-    tableLoadOffset=10;
-    skipOnDataLoad=false;
+    tableLoadStep=10;
     @track moreToLoad=true;
     wiredPeopleParams;
     error;
@@ -80,11 +79,10 @@ export default class PersonDatatable extends LightningElement {
                 return y;
             });
             if (this.sortBy) this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
-            this.skipOnDataLoad=true;
-            this.loadedPeople = this.people.slice(0, this.tableLoadOffset);
-            this.loadedCount=this.tableLoadOffset;
+
+            this.loadedPeople = this.people.slice(0, this.tableLoadStep);
+            this.loadedCount=this.tableLoadStep;
             if (this.loadedCount<this.people.length) this.moreToLoad=true;
-            this.template.querySelector('lightning-datatable').scrollTop=0;
             this.error = undefined;
         } else if (error) {
             this.error = error;
@@ -183,15 +181,12 @@ export default class PersonDatatable extends LightningElement {
             return isReverse * ((x > y) - (y > x));
         });
         this.people = clonePeople;
+        this.loadedPeople = this.people.slice(0, this.loadedCount);
     }
     
 
     handleLoadMore(event) {
-        if(this.skipOnDataLoad){
-            this.skipOnDataLoad=false;
-            return;
-        }
-        this.loadedCount = this.loadedPeople.length + this.tableLoadOffset;
+        this.loadedCount = this.loadedPeople.length + this.tableLoadStep;
         if (this.loadedCount >= this.people.length) this.moreToLoad = false;
         this.loadedCount = (this.loadedCount > this.people.length) ? this.people.length : this.loadedCount; 
         event.target.isLoading = true;

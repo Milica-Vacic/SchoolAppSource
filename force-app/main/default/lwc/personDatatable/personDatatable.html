@@ -38,7 +38,7 @@
     </div>
 
     <div style="height: 300px" class="slds-var-m-around_medium">
-        <template lwc:if={people}>
+        <template lwc:if={loadedPeople}>
             <lightning-datatable
                 key-field="Id"
                 data={loadedPeople}
