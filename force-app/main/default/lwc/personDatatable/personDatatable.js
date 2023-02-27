@@ -55,16 +55,15 @@ export default class PersonDatatable extends LightningElement {
     loadedPeople;
     loadedCount;
     tableLoadStep=10;
-    @track moreToLoad=true;
+    moreToLoad=true;
     wiredPeopleParams;
     error;
     row={};
     searchKey='';
-    @track sortBy;
-    @track sortDirection;
+    sortBy;
+    sortDirection;
     sortFieldName;
 
-    //TODO Research when do we need to use track and do we need it this this project.
     @wire(getPeople, { searchKey: '$searchKey' })
     wiredPeople(value) {
         this.wiredPeopleParams=value;
