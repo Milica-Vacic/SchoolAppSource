@@ -38,10 +38,10 @@
     </div>
 
     <div style="height: 300px" class="slds-var-m-around_medium">
-        <template lwc:if={loadedPeople}>
+        <template lwc:if={people}>
             <lightning-datatable
                 key-field="Id"
-                data={loadedPeople}
+                data={people}
                 columns={columns}
                 onrowaction={handleRowAction}
                 hide-checkbox-column
