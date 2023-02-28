@@ -51,26 +51,25 @@ const DELAY = 300;
 export default class PersonDatatable extends LightningElement {
     columns = columns;
     selectedRecordType;
-    people;
-    loadedPeople;
-    loadedCount;
+    people=[];
     tableLoadStep=10;
-    @track moreToLoad=true;
+    tableOffset=0;
+    moreToLoad=true;
     wiredPeopleParams;
     error;
     row={};
     searchKey='';
-    @track sortBy;
-    @track sortDirection;
+    sortBy;
+    sortDirection;
     sortFieldName;
 
-    //TODO Research when do we need to use track and do we need it this this project.
-    @wire(getPeople, { searchKey: '$searchKey' })
+
+    @wire(getPeople, { searchKey: '$searchKey', limitSize: '$tableLoadStep', offset : '$tableOffset'  })
     wiredPeople(value) {
         this.wiredPeopleParams=value;
         const { data, error } = value;
         if (data) {
-            this.people = data.map(x=>{
+            let mappedPeople = data.map(x=>{
                 let y={};
                 for(const field in x){
                     y[field]=x[field];
@@ -79,22 +78,25 @@ export default class PersonDatatable extends LightningElement {
                 y.RecordType=x.RecordType.Name;
                 return y;
             });
+            this.people=[...this.people,...mappedPeople];
             if (this.sortBy) this.sortData(this.sortFieldName, this.sortDirection, this.nullToEmpty);
-
-            this.loadedPeople = this.people.slice(0, this.tableLoadStep);
-            this.loadedCount=this.tableLoadStep;
-            if (this.loadedCount<this.people.length) this.moreToLoad=true;
+            if (mappedPeople.length<this.tableLoadStep) this.moreToLoad=false;
             this.error = undefined;
-        } else if (error) {
+        }
+        else if (error) {
             this.error = error;
             this.people = undefined;
         }
+        if (this.template.querySelector('lightning-datatable')) this.template.querySelector('lightning-datatable').isLoading=false;
     }
 
     handleKeyChange(event) {
         window.clearTimeout(this.delayTimeout);
         const searchKey = event.target.value;
         this.delayTimeout = setTimeout(() => {
+            this.people=[];
+            this.moreToLoad=true;
+            this.tableOffset=0;
             this.searchKey = searchKey;
         }, DELAY);
     }
@@ -182,18 +184,12 @@ export default class PersonDatatable extends LightningElement {
             return isReverse * ((x > y) - (y > x));
         });
         this.people = clonePeople;
-        this.loadedPeople = this.people.slice(0, this.loadedCount);
     }
 
 
     handleLoadMore(event) {
-        this.loadedCount = this.loadedPeople.length + this.tableLoadStep;
-        if (this.loadedCount >= this.people.length) this.moreToLoad = false;
-        this.loadedCount = (this.loadedCount > this.people.length) ? this.people.length : this.loadedCount;
-        event.target.isLoading = true;
-        this.loadedPeople = this.people.slice(0, this.loadedCount);
-        event.target.isLoading = false;
-
+        event.target.isLoading=true;
+        this.tableOffset=this.people.length;
     }
 
 }
