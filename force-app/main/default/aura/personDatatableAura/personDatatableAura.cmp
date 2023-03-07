@@ -1,0 +1,25 @@
+<aura:component controller="PersonController" implements="flexipage:availableForAllPageTypes, force:appHostable" access="global">
+    <!-- attributes -->
+    <aura:attribute name="people" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <!-- the container element determine the height of the datatable -->
+    <lightning:card title="All people">
+        <div class="slds-m-around_medium">
+            <lightning:button variant="brand-outline" label="Create Person" title="Create Person" onclick="{! c.handlePersonCreate }" />
+        </div>
+        
+        <div class="slds-m-around_medium" style="height: 300px">
+            <lightning:datatable
+                columns="{! v.columns }"
+                data="{! v.people }"
+                keyField="Id"
+                onrowaction="{! c.handleRowAction }"
+                hideCheckboxColumn="true"/>
+        </div>
+    </lightning:card>
+
+</aura:component>
