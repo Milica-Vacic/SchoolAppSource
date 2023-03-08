@@ -1,4 +1,5 @@
 <aura:component controller="PersonController" implements="flexipage:availableForAllPageTypes, force:appHostable" access="global">
+    <lightning:navigation aura:id="navigationService" />
     <!-- attributes -->
     <aura:attribute name="people" type="Object"/>
     <aura:attribute name="columns" type="List"/>

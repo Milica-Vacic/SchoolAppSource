@@ -67,7 +67,12 @@
     },
 
     handlePersonCreate : function (cmp, event, helper) {
-        alert("You clicked: " + event.getSource().get("v.label"));
-        //TO BE ADDED
+        cmp.find("navigationService").navigate({ 
+            "type": "standard__component",
+            "attributes": {
+                "componentName": "c__selectPersonTypeAura"    
+            },
+
+        });
     }
 })

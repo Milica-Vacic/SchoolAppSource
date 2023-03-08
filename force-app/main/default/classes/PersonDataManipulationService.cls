@@ -20,4 +20,11 @@ public with sharing class PersonDataManipulationService {
 
         return Database.queryWithBinds(queryString, varBinds, AccessLevel.SYSTEM_MODE);                  
     }
+
+    public List<RecordType> getRecordTypes() {
+        return [
+            SELECT Id, Name 
+            FROM RecordType 
+            WHERE SobjectType='Person__c'];                 
+    }
 }

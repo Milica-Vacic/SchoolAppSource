@@ -1,0 +1,18 @@
+<aura:component implements="flexipage:availableForAllPageTypes, lightning:isUrlAddressable" access="global" >
+            <aura:attribute name="recordTypeId" type="String"/>
+            <lightning:navigation aura:id="navigationService" />
+            <lightning:notificationsLibrary aura:id="notifLib"/>
+            <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+            
+            <lightning:card title="Create person">
+                <div class="slds-m-around_medium">
+                    <lightning:recordForm aura:id="createPersonForm"
+                    objectApiName="Person__c"
+                    layoutType="Full"
+                    onsuccess="{!c.handleSuccess}"
+                    onsubmit="{!c.handleSubmit}"
+                    recordTypeId="{!v.recordTypeId}" />
+                </div>
+            </lightning:card>
+            
+</aura:component>
