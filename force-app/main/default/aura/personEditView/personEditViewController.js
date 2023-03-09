@@ -1,20 +1,13 @@
 ({
     init : function(component, event, helper) {
         var pageRef=component.get("v.pageReference");
-        component.set("v.recordTypeId",pageRef.state.c__recordTypeId);
-    },
-
-    handleSubmit : function(cmp, event, helper) {
-        event.preventDefault();
-        const fields = event.getParam('fields');
-        if (fields.Phone__c) fields.Phone__c='+381'+fields.Phone__c;
-        cmp.find('createPersonForm').submit(fields);
+        component.set("v.recordId",pageRef.state.c__recordId);
     },
 
     handleSuccess : function(cmp, event, helper) {
         cmp.find('notifLib').showToast({
             "variant": "success",
-            "title": "Person "+event.getParam("fields").Name.value+" Created",
+            "title": "Person "+event.getParam("fields").Name.value+" Edited",
             "message": "Record ID: " + event.getParam("id")
         });
 

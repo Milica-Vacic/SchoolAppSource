@@ -57,7 +57,13 @@
 
         switch (action.name) {
             case 'edit':
-                //TO BE ADDED
+                helper.LightningConfirm.open({
+                    message: `Edit person ${row.Name}?`,
+                    theme: 'default',
+                    label: 'Confirm',
+                }).then(function(result) {
+                    if (result) helper.navToEdit(cmp,row.Id);
+                });
                 break;
             case 'delete':
                 //helper.removeBook(cmp, row);
@@ -74,5 +80,6 @@
             },
 
         });
-    }
+    },
+
 })
