@@ -1,0 +1,20 @@
+<aura:component controller="PersonController" implements="flexipage:availableForAllPageTypes, lightning:isUrlAddressable" access="global">
+    <lightning:navigation aura:id="navigationService" />
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <aura:attribute name="types" type="String[]" default="[]"/>
+
+    <lightning:card title="New Person Record Type">
+        <div class="slds-m-around_medium">
+            <lightning:select aura:id="personTypeSelect" name="select" label="Select a Record Type" required="true">
+                <aura:iteration items="{!v.types}" var="type">
+                        <option text="{!type.Name}" value="{!type.Id}"></option>
+                    </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-m-around_medium">
+            <lightning:button variant="brand-outline" label="Confrim" title="Confirm" onclick="{! c.handleRecTypeSelected }" />
+        </div>
+    </lightning:card>
+    
+</aura:component>	

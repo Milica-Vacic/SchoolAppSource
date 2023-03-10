@@ -7,5 +7,17 @@ public with sharing class PersonController {
         SObjectAccessDecision stripped = Security.stripInaccessible(AccessType.READABLE,people);
         return stripped.getRecords();                    
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<RecordType> getPersonRecordTypes() {
+        PersonDataManipulationService pdms = new PersonDataManipulationService();
+        return pdms.getRecordTypes();
+    }
+
+    @AuraEnabled
+    public static void deletePerson(Person__c person) {
+        if (person!=null) delete person;
+    }
+    
     
     }
