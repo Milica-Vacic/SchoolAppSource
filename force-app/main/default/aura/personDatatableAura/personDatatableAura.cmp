@@ -1,5 +1,6 @@
 <aura:component controller="PersonController" implements="flexipage:availableForAllPageTypes, force:appHostable" access="global">
     <lightning:navigation aura:id="navigationService" />
+    <lightning:notificationsLibrary aura:id="notifLib"/>
     <aura:import library="lightning:confirm" property="LightningConfirm" />
     <!-- attributes -->
     <aura:attribute name="people" type="Object"/>

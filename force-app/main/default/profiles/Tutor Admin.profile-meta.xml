@@ -30,6 +30,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PersonDataManipulationService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PersonTriggerLogicWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -357,6 +361,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Person_CRUD</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Person_Datatable_Aura</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

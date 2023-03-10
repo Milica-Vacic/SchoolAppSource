@@ -66,9 +66,13 @@
                 });
                 break;
             case 'delete':
-                //helper.removeBook(cmp, row);
-                //TO BE ADDED
-                break;
+                helper.LightningConfirm.open({
+                    message: `Delete person ${row.Name}?`,
+                    theme: 'default',
+                    label: 'Confirm',
+                }).then(function(result) {
+                    if (result) helper.handlePersonDelete(cmp,row);
+                });
         }
     },
 

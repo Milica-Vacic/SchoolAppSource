@@ -13,5 +13,11 @@ public with sharing class PersonController {
         PersonDataManipulationService pdms = new PersonDataManipulationService();
         return pdms.getRecordTypes();
     }
+
+    @AuraEnabled
+    public static void deletePerson(Person__c person) {
+        delete person;
+    }
+    
     
     }
