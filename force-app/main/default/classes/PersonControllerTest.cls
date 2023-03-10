@@ -109,5 +109,25 @@ public with sharing class PersonControllerTest {
         Test.stopTest();
     }
 
+    @isTest
+    static void getPersonRecordTypes_returnsListOfRecordTypes() {
+        Test.startTest();
+        List<RecordType> personTypes=PersonController.getPersonRecordTypes();
+        System.assert(personTypes instanceOf List<RecordType>,'Returned value does not match the expected type');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void deletePerson_personParameterRecieved_DeletesPerson() {
+        List<Person__c> people=TestDataFactory.createPeople('tutor', 2, 'Tutor');
+        insert people;
+        Test.startTest();
+        PersonController.deletePerson(people[0]);
+        List<Person__c> returnedPeople=[SELECT Id from Person__c];
+        System.assertEquals(1, returnedPeople.size(),'Unexpected number of records found after deletion');
+        System.assertEquals(people[1].Id, returnedPeople[0].Id,'Incorrect record was deleted');
+        Test.stopTest();
+    }
+
  
 }

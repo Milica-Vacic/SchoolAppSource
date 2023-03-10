@@ -16,7 +16,7 @@ public with sharing class PersonController {
 
     @AuraEnabled
     public static void deletePerson(Person__c person) {
-        delete person;
+        if (person!=null) delete person;
     }
     
     
