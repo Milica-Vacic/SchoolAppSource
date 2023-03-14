@@ -4,7 +4,7 @@
             <apex:pageBlockTable value="{! people }" var="p">
                 <apex:column headerValue="Name">
                         <apex:outputLink title="{! p.Name }"
-                            value="{! URLFOR($Action.Person__c.View, p.Id) }">
+                            value="{! URLFOR($Page.PersonDetailsVF, null, [Id=p.Id]) }">
                             {! p.Name }
                         </apex:outputLink>
                 </apex:column>
