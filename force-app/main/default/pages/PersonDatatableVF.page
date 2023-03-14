@@ -90,10 +90,15 @@
                     </td>
                     <td>
                     <div class="slds-truncate" title="Actions">
-                        <div class="slds-button-group" role="group">
-                          <button title="Edit" class="slds-button slds-button_neutral">Edit</button>
-                          <button title="Delete" class="slds-button slds-button_neutral">Delete</button>
-                        </div>
+					<apex:outputLink title="Edit"
+                        value="{! URLFOR($Action.Person__c.Edit, p.Id) }">
+                        Edit
+                    </apex:outputLink>
+                    &nbsp;
+                    <apex:outputLink title="Delete"
+                        value="{! URLFOR($Action.Person__c.Delete, p.Id) }">
+                        Delete
+                    </apex:outputLink>
                         
                         
                     </div>
