@@ -1,5 +1,7 @@
 <apex:page label="PersonDetailsVF" name="PersonDetailsVF" standardController="Person__c" >
     <apex:pageBlock title="Custom Details">
-        <apex:detail relatedList="false"/>
+        <apex:detail relatedList="false" inlineEdit="false" >
+
+        </apex:detail>
     </apex:pageBlock>
 </apex:page>

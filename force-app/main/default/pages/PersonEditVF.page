@@ -1,0 +1,28 @@
+<apex:page label="PersonEditVF" name="PersonEditVF" standardController="Person__c" extensions="PersonController">
+    <apex:form >
+        <apex:pageBlock title="Custom Edit">
+            <apex:pageMessages />
+            <apex:detail relatedList="false" inlineEdit="true">
+            </apex:detail>
+            <!--<apex:pageBlockButtons location="bottom" styleClass="custom" >
+            	<apex:commandButton action="{! save }" value="Save" styleClass="custom"/>
+        	</apex:pageBlockButtons>-->
+        </apex:pageBlock>
+    </apex:form>
+    
+
+    
+    <!--<script>
+    var btnList=window.document.getElementsByClassName('pbButton')
+            for(i=0;i<btnList.length;i++){
+                if (!btnList[i].classList.contains('custom'))
+                	btnList[i].style.display = 'none';
+            }
+     btnList=window.document.getElementsByClassName('pbButtonb')
+            for(i=0;i<btnList.length;i++){
+                if (!btnList[i].classList.contains('custom'))
+                	btnList[i].style.display = 'none';
+            } 
+	</script>-->
+    
+</apex:page>
