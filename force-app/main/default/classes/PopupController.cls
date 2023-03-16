@@ -32,6 +32,6 @@ public with sharing class PopupController {
     }
 
     public List<Person__c> getPeople(){
-        return controller.getRecords();
+        return [select Id, Name, Phone__c, Email__c, RecordType.Name from Person__c];
     }
 }

@@ -1,12 +1,13 @@
 <apex:page label="PersonDatatableVF" name="PersonDatatableVF" standardController="Person__c" recordSetVar="people" extensions="PopupController">
     <apex:form >
-        <apex:pageBlock title="All People">
+        <apex:pageBlock title="All People" id="peoplePb">
+            <apex:pageMessages />
             <apex:outputPanel id="tstpopup">
                 <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!isVisible}"/>
                 <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!isVisible}">
                         <p style="padding-bottom: 10px;"> Delete person?</p>
+                    <apex:commandButton value="Confirm" action="{!confirmPopup}" rerender="peoplePb"/>
                     <apex:commandButton value="Cancel" action="{!closePopup}" rerender="tstpopup"/>
-                    <apex:commandButton value="Confirm" action="{!confirmPopup}" rerender="tstpopup"/>
                 </apex:outputPanel>
             </apex:outputPanel>
             

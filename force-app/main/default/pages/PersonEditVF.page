@@ -1,7 +1,7 @@
 <apex:page label="PersonEditVF" name="PersonEditVF" standardController="Person__c" extensions="PersonController">
         <apex:pageBlock title="Custom Edit">
             <apex:pageMessages />
-            <apex:detail relatedList="false" inlineEdit="true">
+            <apex:detail subject="{!Id}" relatedList="false" inlineEdit="true">
             </apex:detail>
             <!--<apex:pageBlockButtons location="bottom" styleClass="custom" >
             	<apex:commandButton action="{! save }" value="Save" styleClass="custom"/>

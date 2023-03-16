@@ -1,8 +1,10 @@
 public with sharing class PersonController {
 
     public Person__c person {get; set;}
+    public ApexPages.StandardController ctrl{get; set;}
     
     public PersonController(ApexPages.StandardController controller) {
+        ctrl=controller;
         person = (Person__c) controller.getRecord();
     }
 
@@ -33,11 +35,11 @@ public with sharing class PersonController {
         delete person;
     }
 
-/* 
+
     public PageReference save() {
         PageReference secondPage;
         try{
-            upsert person;
+            ctrl.save();
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Record succesfully saved'));  
             secondPage = Page.PersonDetailsVF;
             secondPage.setRedirect(true);
@@ -48,7 +50,7 @@ public with sharing class PersonController {
         }
 
         return secondPage;
-    } */
+    }
 
 
 
