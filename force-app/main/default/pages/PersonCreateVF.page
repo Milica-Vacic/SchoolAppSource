@@ -1,0 +1,7 @@
+<apex:page label="PersonCreateVF" name="PersonCreateVF" standardController="Person__c" extensions="PersonController">
+     <apex:pageBlock title="Custom Create">
+            <apex:pageMessages />
+            <apex:detail relatedList="false" inlineEdit="true" subject="{!NewPerson.Id}">
+            </apex:detail>
+        </apex:pageBlock>
+</apex:page>

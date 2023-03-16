@@ -5,7 +5,35 @@ public with sharing class PersonController {
     public PersonController(ApexPages.StandardController controller) {
         person = (Person__c) controller.getRecord();
     }
+
+    public Person__c getNewPerson(){
+        Person__c newPerson=new Person__c();
+        String type=ApexPages.currentPage().getParameters().get('Type');
+        newPerson.RecordTypeId=Schema.SObjectType.Person__c.getRecordTypeInfosByName().get(type).getRecordTypeId();
+        return newPerson;
+    }
+
+/*     public Person__c getTutor(){
+        Person__c tutor=new Person__c();
+        tutor.RecordTypeId=Schema.SObjectType.Person__c.getRecordTypeInfosByName().get('Tutor').getRecordTypeId();
+        return tutor;
+    }
+
+    public Person__c getStudent(){
+        Person__c student=new Person__c();
+        student.RecordTypeId=Schema.SObjectType.Person__c.getRecordTypeInfosByName().get('Student').getRecordTypeId();
+        return student;
+    } */
+
+    public PersonController getSelf(){
+        return this;
+    }
     
+    public void delPerson(){
+        delete person;
+    }
+
+/* 
     public PageReference save() {
         PageReference secondPage;
         try{
@@ -20,7 +48,7 @@ public with sharing class PersonController {
         }
 
         return secondPage;
-    }
+    } */
 
 
 
