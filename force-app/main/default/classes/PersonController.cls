@@ -1,19 +1,42 @@
 public with sharing class PersonController {
 
-    public Person__c person {get; set;}
+    public Person__c person{get;set;}
     public ApexPages.StandardController ctrl{get; set;}
     
     public PersonController(ApexPages.StandardController controller) {
         ctrl=controller;
-        person = (Person__c) controller.getRecord();
+        ctrl.addFields(getLayoutFields());
+        person = (Person__c) ctrl.getRecord();
     }
 
-    public Person__c getNewPerson(){
+    public static List<String> getLayoutFields(){
+        List<String> fields= new List<String>();
+        Id id=ApexPages.currentPage().getParameters().get('id');
+        String type = [select RecordType.Name from Person__c where id=:id][0].RecordType.Name;
+
+        List<Metadata.Metadata> layouts = type=='Tutor'?
+            Metadata.Operations.retrieve(Metadata.MetadataType.Layout, new List<String> {'Person__c-Tutor_Layout'}):
+            Metadata.Operations.retrieve(Metadata.MetadataType.Layout, new List<String> {'Person__c-Person Layout'});
+
+        Metadata.Layout layoutMd = (Metadata.Layout)layouts.get(0);
+        for (Metadata.LayoutSection section : layoutMd.layoutSections) {
+            for (Metadata.LayoutColumn column : section.layoutColumns) {
+                if (column.layoutItems != null) {
+                    for (Metadata.LayoutItem item : column.layoutItems) {
+                        if (item.behavior!=Metadata.UiBehavior.Readonly && item.field!='Name') fields.add(item.field);
+                    }
+                }
+            }
+        }
+        return fields;
+    }
+
+/*     public Person__c getNewPerson(){
         Person__c newPerson=new Person__c();
         String type=ApexPages.currentPage().getParameters().get('Type');
         newPerson.RecordTypeId=Schema.SObjectType.Person__c.getRecordTypeInfosByName().get(type).getRecordTypeId();
         return newPerson;
-    }
+    } */
 
 /*     public Person__c getTutor(){
         Person__c tutor=new Person__c();
@@ -27,23 +50,25 @@ public with sharing class PersonController {
         return student;
     } */
 
-    public PersonController getSelf(){
+/*     public PersonController getSelf(){
         return this;
-    }
+    } */
     
-    public void delPerson(){
+/*     public void delPerson(){
         delete person;
-    }
+    } */
 
 
     public PageReference save() {
         PageReference secondPage;
         try{
             ctrl.save();
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Record succesfully saved'));  
             secondPage = Page.PersonDetailsVF;
+            secondPage.getParameters().put('Id',person.Id);
+            system.debug(ApexPages.currentPage().getUrl());
+            system.debug(Page.PersonEditVF.getUrl());
+            secondPage.getParameters().put('Action',ApexPages.currentPage().getUrl().startsWithIgnoreCase(Page.PersonEditVF.getUrl()) ? 'edited' : 'saved');
             secondPage.setRedirect(true);
-            secondPage.getParameters().put('Id',person.Id);   
         }
         catch(DmlException e){
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,e.getMessage()));

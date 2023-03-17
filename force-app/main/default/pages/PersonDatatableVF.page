@@ -23,7 +23,7 @@
                 <apex:column headerValue="Record Type" value="{! p.RecordType.Name }"/>
                 <apex:column width="80px">
                     <apex:outputLink title="Edit" styleClass="btn"  style="text-decoration:none;padding:4px;"
-                            value="{! URLFOR($Action.Person__c.Edit,p.Id) }">
+                            value="{! URLFOR($Action.Person__c.Edit, p.Id) }">
                             Edit
                     </apex:outputLink>
                     &nbsp;
