@@ -17,7 +17,7 @@ public with sharing class PopupController {
         isVisible = true;
     }
 
-    public void confirmPopup() {        
+    public void deletePerson() {        
         isVisible = false;
 
         try{
