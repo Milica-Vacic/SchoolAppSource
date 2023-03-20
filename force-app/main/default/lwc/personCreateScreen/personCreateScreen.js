@@ -36,4 +36,8 @@ export default class PersonCreateScreen extends NavigationMixin(LightningElement
             }
         });
     }
+
+    handleCancel(event){
+            window.history.back();
+    }
 }
