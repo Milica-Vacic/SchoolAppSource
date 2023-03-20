@@ -1,0 +1,18 @@
+<apex:page label="PersonEditVF" name="PersonEditVF" standardController="Person__c" extensions="PersonCtrlExtension">
+    <apex:form>
+        <apex:pageBlock title="Custom Edit">
+            <apex:pageMessages />
+            <apex:pageBlockSection>            
+                <apex:repeat value="{!LayoutFields}" var="fname">
+                    <apex:inputField value="{!person[fname]}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{! save }" value="Save" />
+                <apex:commandButton action="{! cancel }" value="Cancel" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+
+    
+</apex:page>

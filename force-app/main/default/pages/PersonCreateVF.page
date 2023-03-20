@@ -1,0 +1,16 @@
+<apex:page label="PersonCreateVF" name="PersonCreateVF" standardController="Person__c" extensions="PersonCtrlExtension">
+    <apex:form>
+        <apex:pageBlock title="Custom Create">
+            <apex:pageMessages id="showmsg" />   
+            <apex:pageBlockSection>        
+                <apex:repeat value="{!LayoutFields}" var="fname">
+                    <apex:inputField value="{!person[fname]}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{! save }" value="Save" reRender="showmsg" />
+                <apex:commandButton action="{! cancel }" value="Cancel" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

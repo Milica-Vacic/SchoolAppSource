@@ -86,6 +86,7 @@
     <tabs>standard-home</tabs>
     <tabs>Person_CRUD</tabs>
     <tabs>Person_Datatable_Aura</tabs>
+    <tabs>VisualForce_Person_Table</tabs>
     <tabs>standard-Feed</tabs>
     <tabs>Person__c</tabs>
     <tabs>Course__c</tabs>

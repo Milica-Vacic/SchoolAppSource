@@ -1,0 +1,71 @@
+<apex:page label="PersonDatatableVF" name="PersonDatatableVF" standardController="Person__c" recordSetVar="people" extensions="PopupController">
+    <apex:form >
+        <apex:pageBlock title="All People" id="peoplePb">
+            <apex:pageMessages />
+            <apex:outputPanel id="deletePopup">
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!isVisible}"/>
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!isVisible}">
+                        <p style="padding-bottom: 10px;"> Delete person?</p>
+                    <apex:commandButton value="Confirm" action="{!deletePerson}" rerender="peoplePb"/>
+                    <apex:commandButton value="Cancel" action="{!closePopup}" rerender="deletePopup"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            
+            <apex:pageBlockTable value="{! people }" var="p" id="personTable">
+                <apex:column headerValue="Name">
+                        <apex:outputLink title="{! p.Name }"
+                            value="{! URLFOR($Page.PersonDetailsVF, null, [Id=p.Id]) }">
+                            {! p.Name }
+                        </apex:outputLink>
+                </apex:column>
+                <apex:column value="{! p.Email__c }"/>
+                <apex:column value="{! p.Phone__c }"/>
+                <apex:column headerValue="Record Type" value="{! p.RecordType.Name }"/>
+                <apex:column width="80px">
+                    <apex:outputLink title="Edit" styleClass="btn"  style="text-decoration:none;padding:4px;"
+                            value="{! URLFOR($Action.Person__c.Edit, p.Id) }">
+                            Edit
+                    </apex:outputLink>
+                    &nbsp;
+                    <apex:commandButton value="Delete" action="{!showPopup}" rerender="deletePopup">
+                        <apex:param name="currentPers" value="{!p.Id}" assignTo="{!person.Id}"/>
+                    </apex:commandButton>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:pageBlockButtons location="top">
+                <apex:outputLink title="Create Student" styleClass="btn" style="padding: 4px; text-decoration: none;"
+                	value="{! URLFOR($Action.Person__c.New) }">
+                    Create Person
+                </apex:outputLink>
+            </apex:pageBlockButtons>
+    </apex:pageBlock>
+    </apex:form>
+
+    
+    <style type="text/css">
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>
+</apex:page>
