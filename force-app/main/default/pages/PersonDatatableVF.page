@@ -34,12 +34,8 @@
             </apex:pageBlockTable>
             <apex:pageBlockButtons location="top">
                 <apex:outputLink title="Create Student" styleClass="btn" style="padding: 4px; text-decoration: none;"
-                	value="{! URLFOR($Page.PersonCreateVF, null, [Type='Student']) }">
-                    Create Student
-                </apex:outputLink>
-                <apex:outputLink title="Create Tutor" styleClass="btn" style="padding: 4px; text-decoration: none;"
-                	value="{! URLFOR($Page.PersonCreateVF, null, [Type='Tutor']) }">
-                    Create Tutor
+                	value="{! URLFOR($Action.Person__c.New) }">
+                    Create Person
                 </apex:outputLink>
             </apex:pageBlockButtons>
     </apex:pageBlock>
@@ -55,10 +51,6 @@
             left: 50%;
             padding:10px;
             position: absolute;
-            /* These are the 3 css properties you will need to change so the popup 
-            displays in the center of the screen. First set the width. Then set 
-            margin-left to negative half of what the width is. You can add 
-            the height property for a fixed size pop up if you want.*/
             width: 500px;
             margin-left: -250px;
             top:100px;
