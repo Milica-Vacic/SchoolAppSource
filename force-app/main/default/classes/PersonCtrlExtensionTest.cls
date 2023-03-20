@@ -37,7 +37,7 @@ public with sharing class PersonCtrlExtensionTest {
         Test.startTest();
         objPersonCtrlExtension.save();
         Test.stopTest();
-        List<Person__c> returnedPeople=[select Id, Phone__c from Person__c];
+        List<Person__c> returnedPeople=[SELECT Id, Phone__c FROM Person__c];
         System.assertEquals(people.size(),returnedPeople.size(),'Returned record list is not of expected length');
         System.assertEquals(people[0].Id,returnedPeople[0].Id,'Returned record Id does not match expected value');
         System.assertEquals('+381'+people[0].Phone__c,returnedPeople[0].Phone__c,'Returned record Phone__c value does not match expected value');
@@ -54,7 +54,7 @@ public with sharing class PersonCtrlExtensionTest {
         Test.startTest();
         objPersonCtrlExtension.save();
         Test.stopTest();
-        List<Person__c> returnedPeople=[select Id, Phone__c, First_Name__c from Person__c];
+        List<Person__c> returnedPeople=[SELECT Id, Phone__c, First_Name__c FROM Person__c];
         System.assertEquals(people.size(),returnedPeople.size(),'Returned record list is not of expected length');
         System.assertEquals(people[0].Id,returnedPeople[0].Id,'Returned record Id does not match expected value');
         System.assertEquals('Edited',returnedPeople[0].First_Name__c,'Returned record First_Name__c value does not match expected value');

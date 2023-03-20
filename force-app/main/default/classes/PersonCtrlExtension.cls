@@ -18,9 +18,13 @@ public with sharing class PersonCtrlExtension {
         List<String> fields= new List<String>();
         String type;
         if (recId!=null)
-            type= [select RecordType.Name from Person__c where id=:recId][0].RecordType.Name;
+            type= [SELECT RecordType.Name 
+                    FROM Person__c
+                    WHERE id=:recId][0].RecordType.Name;
         else 
-            type= [select Name from RecordType where id=:recTypeId][0].Name;
+            type= [SELECT Name 
+                    FROM RecordType
+                    WHERE id=:recTypeId][0].Name;
 
         List<Metadata.Metadata> layouts = type=='Tutor'?
             Metadata.Operations.retrieve(Metadata.MetadataType.Layout, new List<String> {'Person__c-Tutor_Layout'}):
