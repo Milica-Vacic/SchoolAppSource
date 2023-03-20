@@ -1,4 +1,4 @@
-<apex:page label="PersonDetailsVF" name="PersonDetailsVF" standardController="Person__c" extensions="PersonController">
+<apex:page label="PersonDetailsVF" name="PersonDetailsVF" standardController="Person__c" extensions="PersonCtrlExtension">
     <apex:pageBlock title="Custom Details">
         <apex:pageMessage  summary="Record {!$CurrentPage.parameters.action} successfuly!" severity="CONFIRM" strength="2" rendered="{!$CurrentPage.parameters.action!=null}"/>
         <apex:detail relatedList="false" inlineEdit="false" />
