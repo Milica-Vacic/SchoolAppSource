@@ -7,7 +7,7 @@ public with sharing class PersonCtrlExtension {
     
     public PersonCtrlExtension(ApexPages.StandardController controller) {
         ctrl=controller;
-        ctrl.addFields(getLayoutFields());
+        if (!Test.isRunningTest()) ctrl.addFields(getLayoutFields());
         person = (Person__c) ctrl.getRecord();
         if (person.Id==null){
             person = (Person__c)Person__c.sObjectType.newSObject(recTypeId, true);
@@ -36,7 +36,6 @@ public with sharing class PersonCtrlExtension {
                 }
             }
         }
-        System.debug(fields);
         return fields;
     }
 
@@ -47,8 +46,6 @@ public with sharing class PersonCtrlExtension {
             upsert person;
             secondPage = Page.PersonDetailsVF;
             secondPage.getParameters().put('Id',person.Id);
-            system.debug(ApexPages.currentPage().getUrl());
-            system.debug(Page.PersonEditVF.getUrl());
             secondPage.getParameters().put('Action',ApexPages.currentPage().getUrl().startsWithIgnoreCase(Page.PersonEditVF.getUrl()) ? 'edited' : 'saved');
             secondPage.setRedirect(true);
         }
