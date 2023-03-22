@@ -94,13 +94,17 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <content>PersonCreateWrapper</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>New</actionName>
+        <content>PersonCreateWrapper</content>
         <formFactor>Small</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>SaveEdit</actionName>
