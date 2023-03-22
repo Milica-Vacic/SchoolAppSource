@@ -1,7 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes, lightning:isUrlAddressable, lightning:actionOverride" access="global">
     <aura:attribute name="recordTypeId" type="String"/>
-    <aura:handler name="init" value="{! this }" action="{! c.onPageReferenceChange }"/>
-    <aura:handler name="change" value="{!v.pageReference.state.recordTypeId}" action="{!c.onPageReferenceChange}"/>
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:handler name="change" value="{!v.pageReference.state.recordTypeId}" action="{!c.pageRefChange}"/>
 
     <c:personCreateScreen recordTypeId="{!v.recordTypeId}"></c:personCreateScreen>
 </aura:component>	
