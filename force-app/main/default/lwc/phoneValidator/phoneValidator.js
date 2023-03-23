@@ -5,19 +5,19 @@ export default class PhoneValidator extends LightningElement {
     @api objectApiName;
     @api recordId;
     @api fieldName;
+    hasAccess;
+    readOnly;
 
     @wire(getFieldAccessability,{objectApiName:'$objectApiName', fieldName:'$fieldName'})
-    __access;
-
-    get hasAccess(){
-        if (this.__access=='unreadable') return false;
-        else return true;
-    }
-
-    get readOnly(){
-        if (this.__access=='readable') return true;
-        else return false;
-    }
+    access({ error, data }) {
+        if (data) {
+            this.hasAccess=data=='unreadable'?false:true;
+            this.readOnly=data=='readable'?true:false;
+          } else if (error) {
+            this.hasAccess=false;
+            this.readOnly=false;
+          }
+     }
 
     get FieldName(){
         return this.fieldName.charAt(0).toUpperCase() + this.fieldName.slice(1);
