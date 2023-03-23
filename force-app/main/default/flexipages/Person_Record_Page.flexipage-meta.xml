@@ -265,6 +265,16 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>fieldName</name>
+                    <value>phone__c</value>
+                </componentInstanceProperties>
+                <componentName>phoneValidator</componentName>
+                <identifier>c_phoneValidator</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>sidebartabs</value>
                 </componentInstanceProperties>

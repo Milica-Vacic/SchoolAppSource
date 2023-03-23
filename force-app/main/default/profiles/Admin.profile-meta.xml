@@ -22,11 +22,23 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcUtility</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PersonController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PersonControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PersonCtrlExtension</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PersonCtrlExtensionTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -39,6 +51,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PersonTriggerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PhoneFieldPicklist</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -55,6 +71,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PopupController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PopupControllerTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
