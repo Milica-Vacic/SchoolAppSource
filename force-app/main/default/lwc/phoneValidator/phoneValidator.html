@@ -1,9 +1,16 @@
 <template>
     <lightning-card title={title} icon-name="utility:call">
         <div class="slds-m-around--medium" >
+
+            <div class="slds-m-around--medium">
+                <c-generic-modal title="Phone Validation Result" data-id="validationResultModal">
+                    <p slot="modalBody">{validationResult}</p>
+                </c-generic-modal>
+            </div>
+
         <lightning-record-edit-form lwc:if={hasAccess} object-api-name={objectApiName} record-id={recordId}>
             <lightning-messages></lightning-messages>
-            <lightning-input-field readonly={readOnly} field-name={FieldName}> </lightning-input-field>
+            <lightning-input-field data-id="phoneField" readonly={readOnly} field-name={FieldName}> </lightning-input-field>
             <lightning-button label="Validate" onclick={handleValidate} class="slds-m-left_x-small"></lightning-button>
             <lightning-button
                 type="submit"

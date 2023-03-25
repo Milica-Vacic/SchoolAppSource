@@ -17,7 +17,7 @@ public with sharing class PhoneValidationAPI {
         return validRes;
     }
 
-    public static HttpResponse validate(String newPhone, String fieldName, String validationCountry) {
+    public static HttpResponse validate(String newPhone, String validationCountry) {
         HttpRequest request = new HttpRequest();
         ValidationAPISettings__mdt mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance(ValidationAPISettingsInstance);
         if(mdt==null) mdt= (ValidationAPISettings__mdt)ValidationAPISettings__mdt.getInstance('Default');
@@ -35,7 +35,7 @@ public with sharing class PhoneValidationAPI {
 
     @future(callout=true)
     public static void validatePerson(ID personId, String newPhone, String fieldName, String personCountry) {
-        HttpResponse res = validate(newPhone, fieldName, personCountry);  
+        HttpResponse res = validate(newPhone, personCountry);  
         Phone_Validation_Result__c validRes=new Phone_Validation_Result__c();
         if (res.getStatusCode()==200){
             validRes= mapToSObject(res);
