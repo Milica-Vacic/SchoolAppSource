@@ -13,7 +13,8 @@ export default class PhoneValidator extends LightningElement {
     hasAccess;
     readOnly;
     validationResult;
-    phone;
+    validationDetails;
+    columns;
 
     @wire(getFieldAccessability,{objectApiName:'$objectApiName', fieldName:'$fieldName'})
     access({ error, data }) {
@@ -42,7 +43,7 @@ export default class PhoneValidator extends LightningElement {
         return `Validate ${this.FieldName}`
     }
 
-    handleValidate(event){
+    handleValidate(){
         validatePhone({ phone:this.template.querySelector('[data-id="phoneField"]').value, country:this.country})
             .then((result)=>{
                 let res=JSON.parse(result);
@@ -57,6 +58,19 @@ export default class PhoneValidator extends LightningElement {
     }
 
     handleViewDetails(){
-        //TO BE ADDED
+        validatePhone({ phone:this.template.querySelector('[data-id="phoneField"]').value, country:this.country})
+            .then((result)=>{
+                let res=JSON.parse(result);
+                this.validationDetails=res.Items;
+                this.columns=[];
+                for(let fname in res.Items[0]){
+                    this.columns.push({label:fname, fieldName:fname, type:'text', wrapText:true})
+                }
+                this.template.querySelector('[data-id="validationDetailsModal"]').showModalBox();
+            })
+            .catch((error)=>{
+                this.validationResult=`Error: ${error.body.message}`;
+                this.template.querySelector('[data-id="validationResultModal"]').showModalBox();
+            })
     }
 }

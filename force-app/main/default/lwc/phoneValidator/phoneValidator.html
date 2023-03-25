@@ -8,6 +8,17 @@
                 </c-generic-modal>
             </div>
 
+            <div class="slds-m-around--medium">
+                <c-generic-modal title="Phone Validation Details" data-id="validationDetailsModal">
+                    <lightning-datatable
+                    slot="modalBody"
+                    key-field="id"
+                    data={validationDetails}
+                    columns={columns}>
+                </lightning-datatable>
+                </c-generic-modal>
+            </div>
+
         <lightning-record-edit-form lwc:if={hasAccess} object-api-name={objectApiName} record-id={recordId}>
             <lightning-messages></lightning-messages>
             <lightning-input-field data-id="phoneField" readonly={readOnly} field-name={FieldName}> </lightning-input-field>
