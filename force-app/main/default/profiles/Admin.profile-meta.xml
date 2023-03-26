@@ -26,6 +26,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcUtilityTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PersonController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -55,6 +59,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PhoneFieldPicklist</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PhoneFieldPicklistTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
