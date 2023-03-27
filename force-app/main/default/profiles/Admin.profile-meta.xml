@@ -90,6 +90,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>AccessPhoneValidator</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Assignment__c.Description__c</field>

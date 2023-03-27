@@ -270,6 +270,13 @@
                 </componentInstanceProperties>
                 <componentName>phoneValidator</componentName>
                 <identifier>c_phoneValidator</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!$Permission.CustomPermission.AccessPhoneValidator}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>false</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
