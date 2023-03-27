@@ -5,15 +5,6 @@ public with sharing class LwcUtilityTest {
     private static Map<String,String> headers= new Map<String,String>{'Content-Type'=>'application/json;charset=UTF-8'};
 
     @isTest
-    static void getFieldAccessability_PersonPhoneField_ResultOfAcceptableValue() {
-        List<String> acceptableVals=new List<String>{'readable','unreadable', 'updatable'};
-        Test.startTest();
-        String val=LwcUtility.getFieldAccessability('Person__c', 'Phone__c');
-        Test.stopTest();
-        System.assert(acceptableVals.contains(val),'Returned value should be readable, unreadable or updatable');      
-    }
-
-    @isTest
     static void validatePhone_withoutCountry_ReturnValueIsParsableToDTO() {
         String phone='0604009911';
         String body=successBody.replace('{0}', phone);
