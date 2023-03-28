@@ -64,7 +64,10 @@ export default class PhoneValidatorUtilityBar extends LightningElement {
     }
 
     handleValidate(){
-        validatePhone({ phone:this.template.querySelector('[data-id="phoneField"]').value})
+        let phoneParam=(this.sObjectId) ? this.template.querySelector('[data-id="phoneField"]').value : 
+            this.template.querySelector('[data-id="phoneFieldRecordless"]').value;
+
+        validatePhone({ phone:phoneParam})
             .then((result)=>{
                 let res=JSON.parse(result);
                 res.Items[0].Error ? this.validationResult =`Error! ${res.Items[0].Description}: ${res.Items[0].Cause}` : 
@@ -78,7 +81,10 @@ export default class PhoneValidatorUtilityBar extends LightningElement {
     }
 
     handleViewDetails(){
-        validatePhone({ phone:this.template.querySelector('[data-id="phoneField"]').value})
+    let phoneParam=(this.sObjectId) ? this.template.querySelector('[data-id="phoneField"]').value : 
+                this.template.querySelector('[data-id="phoneFieldRecordless"]').value;
+
+        validatePhone({ phone:phoneParam})
             .then((result)=>{
                 let res=JSON.parse(result);
                 this.validationDetails=res.Items;

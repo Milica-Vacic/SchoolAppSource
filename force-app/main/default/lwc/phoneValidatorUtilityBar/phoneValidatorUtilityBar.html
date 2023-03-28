@@ -43,5 +43,10 @@
                 Component cannot be loaded due to lack of access to field
             </p>
         </div>
+        <div lwc:else>
+                <lightning-input type="text" label="Phone:" data-id="phoneFieldRecordless" class="slds-m-vertical--medium"> </lightning-input>
+                <lightning-button label="Validate" onclick={handleValidate} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button label="View Details" onclick={handleViewDetails} class="slds-m-left_x-small"></lightning-button>
+        </div>
     </div>
 </template>
