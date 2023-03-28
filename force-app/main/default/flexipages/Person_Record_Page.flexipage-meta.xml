@@ -274,7 +274,7 @@
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.AccessPhoneValidator}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>false</rightValue>
+                        <rightValue>true</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

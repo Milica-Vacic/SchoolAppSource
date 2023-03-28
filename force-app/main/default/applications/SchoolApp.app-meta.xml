@@ -13,6 +13,78 @@
     <navType>Standard</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>Tutor</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>Tutor</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>Tutor Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>Tutor Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>StandardAul</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Person_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Person__c</pageOrSobjectType>
+        <recordType>Person__c.Student</recordType>
+        <type>Flexipage</type>
+        <profile>StandardAul</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Tutor_Page</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Person__c</pageOrSobjectType>
