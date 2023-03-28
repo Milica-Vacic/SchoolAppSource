@@ -1,5 +1,4 @@
 <template>
-    <lightning-card title={title} icon-name="utility:call">
         <div class="slds-m-around--medium" >
 
             <div class="slds-m-around--medium">
@@ -18,30 +17,31 @@
                 </lightning-datatable>
                 </c-generic-modal>
             </div>
-
-        <lightning-combobox lwc:if={recordId}
-            name="fieldName"
-            label="Field To Validate"
-            value={fieldName}
-            placeholder="Select phone field..."
-            options={options}
-            onchange={handleFieldChange} >
-        </lightning-combobox>
-        <lightning-record-edit-form lwc:if={hasAccess} object-api-name={objectApiName} record-id={recordId}>
-            <lightning-messages></lightning-messages>
-            <lightning-input-field data-id="phoneField" readonly={readOnly} field-name={FieldName}> </lightning-input-field>
-            <lightning-button label="Validate" onclick={handleValidate} class="slds-m-left_x-small"></lightning-button>
-            <lightning-button
-                type="submit"
-                name="submit"
-                label="Save"
-                class="slds-m-left_x-small"
-            ></lightning-button>
-            <lightning-button label="View Details" onclick={handleViewDetails} class="slds-m-left_x-small"></lightning-button>
-        </lightning-record-edit-form>
-        <p lwc:elseif={recordId}>
-            Component cannot be loaded due to lack of access to field
-        </p>
+            
+        <div lwc:if={sObjectId}>
+            <lightning-combobox
+                name="fieldName"
+                label="Field To Validate"
+                value={selectedField}
+                placeholder="Select phone field..."
+                options={phoneFields}
+                onchange={handleFieldChange} >
+            </lightning-combobox>
+            <lightning-record-edit-form lwc:if={hasAccess} object-api-name={sObjectName} record-id={sObjectId}>
+                <lightning-messages></lightning-messages>
+                <lightning-input-field data-id="phoneField" readonly={readOnly} field-name={selectedField}> </lightning-input-field>
+                <lightning-button label="Validate" onclick={handleValidate} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button
+                    type="submit"
+                    name="submit"
+                    label="Save"
+                    class="slds-m-left_x-small"
+                ></lightning-button>
+                <lightning-button label="View Details" onclick={handleViewDetails} class="slds-m-left_x-small"></lightning-button>
+            </lightning-record-edit-form>
+            <p lwc:else>
+                Component cannot be loaded due to lack of access to field
+            </p>
+        </div>
     </div>
-    </lightning-card>
 </template>
