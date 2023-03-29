@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import validatePhone from '@salesforce/apex/LwcUtility.validatePhone';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import hasPermission from '@salesforce/customPermission/AccessPhoneValidator';
 
 
 export default class PhoneValidator extends LightningElement {
@@ -12,6 +13,8 @@ export default class PhoneValidator extends LightningElement {
     validationResult;
     validationDetails;
     columns;
+
+
 
  @wire(getObjectInfo, { objectApiName: '$objectApiName'})
     objectInfo({error, data}) {
@@ -31,6 +34,10 @@ export default class PhoneValidator extends LightningElement {
 
     get title(){
         return `Validate ${this.FieldName}`
+    }
+
+    get componentAccess(){
+        return hasPermission;
     }
 
     handleValidate(){

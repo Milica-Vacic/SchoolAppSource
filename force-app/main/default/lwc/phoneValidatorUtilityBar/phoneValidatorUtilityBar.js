@@ -2,13 +2,7 @@ import { LightningElement, api, wire } from 'lwc';
 import validatePhone from '@salesforce/apex/LwcUtility.validatePhone';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getRecord} from 'lightning/uiRecordApi';
-
-//has record id
-    //dovlaci fields into a select
-    //cita vrednost tog polja, can validate, edit and detail
-//no record id
-    //nema polja za select
-    //samo text input boji salje apiju na potvrdu
+import hasPermission from '@salesforce/customPermission/AccessPhoneValidator';
 
 export default class PhoneValidatorUtilityBar extends LightningElement {
     @api sObjectId;
@@ -57,6 +51,10 @@ export default class PhoneValidatorUtilityBar extends LightningElement {
 
     handleFieldChange(event){
         this.selectedField = event.detail.value;
+    }
+
+    get componentAccess(){
+        return hasPermission;
     }
 
     get title(){
