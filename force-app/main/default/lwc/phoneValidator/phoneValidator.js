@@ -1,7 +1,8 @@
 import { LightningElement, api, wire } from 'lwc';
-import validatePhone from '@salesforce/apex/LwcUtility.validatePhone';
+import { getDetailData, getDetailColumns, getResponse } from 'c/phoneValidationUtility';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import hasPermission from '@salesforce/customPermission/AccessPhoneValidator';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 
 export default class PhoneValidator extends LightningElement {
@@ -40,34 +41,24 @@ export default class PhoneValidator extends LightningElement {
         return hasPermission;
     }
 
-    handleValidate(){
-        validatePhone({ phone:this.template.querySelector('[data-id="phoneField"]').value})
-            .then((result)=>{
-                let res=JSON.parse(result);
-                res.Items[0].Error ? this.validationResult =`Error! ${res.Items[0].Description}: ${res.Items[0].Cause}` : 
-                    `Phone valid? ${res.Items[0].IsValid}`;
-            })
-            .catch((error)=>{
-                this.validationResult=`Error: ${error.body.message}`;
-            })
-            .then(()=>{this.template.querySelector('[data-id="validationResultModal"]').showModalBox();
-            });
+    async handleValidate(){
+        this.validationResult=await getResponse(this.template.querySelector('[data-id="phoneField"]').value);
+        this.template.querySelector('[data-id="validationResultModal"]').showModalBox();
     }
 
     handleViewDetails(){
-        validatePhone({ phone:this.template.querySelector('[data-id="phoneField"]').value})
-            .then((result)=>{
-                let res=JSON.parse(result);
-                this.validationDetails=res.Items;
-                this.columns=[];
-                for(let fname in res.Items[0]){
-                    this.columns.push({label:fname, fieldName:fname, type:'text', wrapText:true})
-                }
-                this.template.querySelector('[data-id="validationDetailsModal"]').showModalBox();
-            })
-            .catch((error)=>{
-                this.validationResult=`Error: ${error.body.message}`;
-                this.template.querySelector('[data-id="validationResultModal"]').showModalBox();
-            })
+        this.validationDetails=getDetailData();
+        this.columns=getDetailColumns();
+        if (this.validationDetails && this.columns)
+            this.template.querySelector('[data-id="validationDetailsModal"]').showModalBox();
+        else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error retrieving details',
+                    message: 'Make sure you have succesfully validated a phone number before reqesting validation details',
+                    variant: 'error'
+                })
+            );
+        }
     }
 }
