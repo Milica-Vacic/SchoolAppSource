@@ -1,0 +1,3 @@
+<aura:component implements="force:hasRecordId, flexipage:availableForAllPageTypes" access="global">
+        <c:phoneValidatorUtilityBar sObjectId="{!v.recordId}"></c:phoneValidatorUtilityBar>
+</aura:component>	
