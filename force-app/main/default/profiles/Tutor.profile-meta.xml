@@ -22,11 +22,27 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcUtility</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcUtilityTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PersonController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PersonControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PersonCtrlExtension</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PersonCtrlExtensionTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -42,6 +58,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PhoneFieldPicklist</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PhoneFieldPicklistTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PhoneValidationAPI</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -51,6 +75,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PhoneValidationTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PopupController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PopupControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -346,7 +378,19 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
+        <apexPage>PersonCreateVF</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>PersonDatatableVF</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PersonDetailsVF</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PersonEditVF</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <recordTypeVisibilities>

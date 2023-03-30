@@ -5,7 +5,7 @@ private class PhoneValidationTest {
     private static String errorBody='{"Items":[{"Id":1002,"Error":"Invalid phone number format","Cause":"The phone number provided is not in a valid international format.","Resolution":"Please ensure that you supply a phone number and try again."}]}';
     private static Map<String,String> headers= new Map<String,String>{'Content-Type'=>'application/json;charset=UTF-8'};
 
-    @isTest static void validate_personCreationWithPhone_phoneValid() {
+    @isTest static void validatePerson_personCreationWithPhone_phoneValid() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='+381604009911';
         String body=successBody.replace('{0}', p.Phone__c);
@@ -42,7 +42,7 @@ private class PhoneValidationTest {
         System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on succesful Phone Validation Result');
     }
 
-    @isTest static void validate_personCreationBadPhone_errorResult() {
+    @isTest static void validatePerson_personCreationBadPhone_errorResult() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='abc';
         String body=errorBody;
@@ -77,7 +77,7 @@ private class PhoneValidationTest {
         System.assertEquals(null, res.API_Error__c, 'API_Error__c should be null on bad Phone Validation Result');
     }
 
-    @isTest static void validate_personCreationNoPhone_noValidation() {
+    @isTest static void validatePerson_personCreationNoPhone_noValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         Test.startTest();
         insert p;
@@ -87,7 +87,7 @@ private class PhoneValidationTest {
         System.assertEquals(0, valResults.size(), 'No phone validation results should have been created for new user');        
     }
 
-    @isTest static void validate_updateWithSamePhone_noValidation() {
+    @isTest static void validatePerson_updateWithSamePhone_noValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         String body=successBody.replace('{0}', p.Phone__c);
@@ -103,7 +103,7 @@ private class PhoneValidationTest {
 
     }
 
-    @isTest static void validate_multiPersonCreation_singleValidation() {
+    @isTest static void validatePerson_multiPersonCreation_singleValidation() {
         List<Person__c> people=TestDataFactory.createPeople('test', 5);
         for(Person__c p: people) p.Phone__c='0604009911';
         String body=successBody.replace('{0}', people[0].Phone__c);
@@ -118,7 +118,7 @@ private class PhoneValidationTest {
         System.assertEquals(people[0].Id, valResults[0].Person__c, 'Validated phone belongs to an incorrect person');      
     }
 
-    @isTest static void validate_multiTrigger_singleValidation() {
+    @isTest static void validatePerson_multiTrigger_singleValidation() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         String body=successBody.replace('{0}', p.Phone__c);
@@ -134,7 +134,7 @@ private class PhoneValidationTest {
         System.assertEquals('0604009911', valResults[0].PhoneNumber__c, 'Validated phone should match first value');   
     }
 
-    @isTest static void validate_updatePhoneWithValidateMultipleTrue_twoValidations() {
+    @isTest static void validatePerson_updatePhoneWithValidateMultipleTrue_twoValidations() {
         PersonTriggerLogicWrapper.validateMultiple=true;
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
@@ -150,7 +150,7 @@ private class PhoneValidationTest {
         System.assertEquals(2, valResults.size(), 'Exactly two phone validation results should have been created');
     }
 
-    @isTest static void validate_createPersonWithCountry_newtworkCountryMatch() {
+    @isTest static void validatePerson_createPersonWithCountry_newtworkCountryMatch() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         p.Country__c='USA';
@@ -164,7 +164,7 @@ private class PhoneValidationTest {
         System.assertEquals(p.Country__c, valResults[0].NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');  
     }
 
-    @isTest static void validate_noCountry_emptyCountry() {
+    @isTest static void validatePerson_noCountry_emptyCountry() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         PhoneValidationAPI.ValidationAPISettingsInstance='NoCountry';
@@ -178,7 +178,7 @@ private class PhoneValidationTest {
         System.assertEquals(null, valResults[0].NetworkCountry__c, 'Incorrect value on Phone Validation Result for NetworkCountry__c');  
     }
 
-    @isTest static void validate_createWith2Phones_validateBoth() {
+    @isTest static void validatePerson_createWith2Phones_validateBoth() {
         Person__c p=TestDataFactory.createPeople('test', 1)[0];
         p.Phone__c='0604009911';
         p.Work_Phone__c='0604009915';

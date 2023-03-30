@@ -28,7 +28,7 @@ public with sharing class PersonTriggerLogicWrapper {
         if (skipPhoneValidation||alreadyValidated) return;
         for(String field:FIELDS_TO_VALIDATE){
             if (!String.isBlank((String)newRec.get(field)) && !(newRec.get(field)==oldRec?.get(field))){
-                PhoneValidationAPI.validate(newRec.Id,(String)newRec.get(field),field, newRec.Country__c);
+                PhoneValidationAPI.validatePerson(newRec.Id,(String)newRec.get(field),field, newRec.Country__c);
             }
         }
         if (!validateMultiple) alreadyValidated=true;
